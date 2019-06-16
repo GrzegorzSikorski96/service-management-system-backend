@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateClientsTable extends Migration
 {
@@ -11,9 +13,9 @@ class CreateClientsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
@@ -29,7 +31,7 @@ class CreateClientsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('clients');
     }
