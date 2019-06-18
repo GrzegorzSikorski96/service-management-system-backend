@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateNotesTable
+ */
 class CreateNotesTable extends Migration
 {
     /**
@@ -18,9 +21,13 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('content');
-            $table->bigInteger('created_by')->unsigned();
-            $table->bigInteger('ticket_id')->unsigned();
             $table->timestamps();
+
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users');
+
+            $table->unsignedBigInteger('ticket_id');
+            $table->foreign('ticket_id')->references('id')->on('tickets');
         });
     }
 
@@ -31,6 +38,10 @@ class CreateNotesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notes');
+        Schema::table('notes', function (Blueprint $table): void {
+            $table->dropForeign('notes_ticket_id_foreign');
+            $table->dropForeign('notes_created_by_foreign');
+            $table->dropIfExists();
+        });
     }
 }

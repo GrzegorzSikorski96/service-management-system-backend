@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreatePasswordResetsTable
+ */
 class CreatePasswordResetsTable extends Migration
 {
     /**
@@ -13,7 +16,7 @@ class CreatePasswordResetsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('password_resets', function (Blueprint $table): void {
             $table->string('email')->index();
@@ -27,7 +30,7 @@ class CreatePasswordResetsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('password_resets');
     }

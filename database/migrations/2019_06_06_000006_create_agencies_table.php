@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateAgenciesTable
+ */
 class CreateAgenciesTable extends Migration
 {
     /**
@@ -20,8 +23,10 @@ class CreateAgenciesTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone_number');
-            $table->bigInteger('service_id')->unsigned();
             $table->timestamps();
+
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
         });
     }
 
@@ -32,6 +37,9 @@ class CreateAgenciesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agencies');
+        Schema::table('agencies', function (Blueprint $table): void {
+            $table->dropForeign('agencies_service_id_foreign');
+            $table->dropIfExists();
+        });
     }
 }

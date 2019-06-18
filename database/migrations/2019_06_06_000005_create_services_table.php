@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateServicesTable
+ */
 class CreateServicesTable extends Migration
 {
     /**
@@ -20,8 +23,10 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('address');
-            $table->bigInteger('owner_id')->unsigned();
             $table->timestamps();
+
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users');
         });
     }
 
@@ -32,6 +37,9 @@ class CreateServicesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::table('services', function (Blueprint $table): void {
+            $table->dropForeign('services_owner_id_foreign');
+            $table->dropIfExists();
+        });
     }
 }

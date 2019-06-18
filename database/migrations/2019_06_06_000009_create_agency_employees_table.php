@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateAgencyEmployeesTable
+ */
 class CreateAgencyEmployeesTable extends Migration
 {
     /**
@@ -17,10 +20,15 @@ class CreateAgencyEmployeesTable extends Migration
     {
         Schema::create('agency_employees', function (Blueprint $table): void {
             $table->bigIncrements('id');
-            $table->bigInteger('agency_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('agency_role_id')->unsigned();
-            $table->timestamps();
+
+            $table->unsignedBigInteger('agency_id');
+            $table->foreign('agency_id')->references('id')->on('agencies');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('agency_role_id');
+            $table->foreign('agency_role_id')->references('id')->on('agency_roles');
         });
     }
 
@@ -31,6 +39,11 @@ class CreateAgencyEmployeesTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agency_employees');
+        Schema::table('agency_employees', function (Blueprint $table): void {
+            $table->dropForeign('agency_employees_agency_role_id_foreign');
+            $table->dropForeign('agency_employees_user_id_foreign');
+            $table->dropForeign('agency_employees_agency_id_foreign');
+            $table->dropIfExists();
+        });
     }
 }
