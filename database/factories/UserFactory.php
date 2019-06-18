@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Sms\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Sms\Models\User;
 
 /*
 |--------------------------------------------------------------------------

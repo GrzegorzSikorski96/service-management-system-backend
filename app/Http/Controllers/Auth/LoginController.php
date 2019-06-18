@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers\Auth;
 
-use Sms\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Sms\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
