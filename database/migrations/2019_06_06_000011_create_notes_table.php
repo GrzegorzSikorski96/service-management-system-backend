@@ -21,13 +21,14 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('content');
-            $table->timestamps();
 
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->unsignedBigInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets');
+
+            $table->timestamps();
         });
     }
 

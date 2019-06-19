@@ -7,9 +7,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateServicesTable
+ * Class CreateAgenciesTable
  */
-class CreateServicesTable extends Migration
+class CreateAgenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,15 +18,16 @@ class CreateServicesTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table): void {
+        Schema::create('agencies', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
             $table->string('address');
-            $table->timestamps();
+            $table->string('phone_number');
 
-            $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('id')->on('services');
+
+            $table->timestamps();
         });
     }
 
@@ -37,8 +38,8 @@ class CreateServicesTable extends Migration
      */
     public function down(): void
     {
-        Schema::table('services', function (Blueprint $table): void {
-            $table->dropForeign('services_owner_id_foreign');
+        Schema::table('agencies', function (Blueprint $table): void {
+            $table->dropForeign('agencies_service_id_foreign');
             $table->dropIfExists();
         });
     }

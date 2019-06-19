@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    protected $table = 'users';
+
     use Notifiable;
 
     /**
@@ -37,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class, 'created_by');
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(AgencyRole::class, 'agency_role_id');
+    }
 }

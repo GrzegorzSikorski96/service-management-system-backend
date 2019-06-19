@@ -20,13 +20,14 @@ class CreateAgencyDevicesTable extends Migration
     {
         Schema::create('agency_devices', function (Blueprint $table): void {
             $table->bigIncrements('id');
-            $table->timestamps();
 
             $table->unsignedBigInteger("device_id");
             $table->foreign('device_id')->references('id')->on('devices');
 
             $table->unsignedBigInteger("agency_id");
             $table->foreign('agency_id')->references('id')->on('agencies');
+
+            $table->timestamps();
         });
     }
 

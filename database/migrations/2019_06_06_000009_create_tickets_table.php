@@ -23,7 +23,6 @@ class CreateTicketsTable extends Migration
             $table->string('description');
             $table->string('note');
             $table->string('message');
-            $table->timestamps();
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
@@ -33,6 +32,8 @@ class CreateTicketsTable extends Migration
 
             $table->unsignedBigInteger('device_id');
             $table->foreign('device_id')->references('id')->on('devices');
+
+            $table->timestamps();
         });
     }
 

@@ -27,8 +27,7 @@ class CreateAgencyEmployeesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('agency_role_id');
-            $table->foreign('agency_role_id')->references('id')->on('agency_roles');
+            $table->timestamps();
         });
     }
 
@@ -40,7 +39,6 @@ class CreateAgencyEmployeesTable extends Migration
     public function down(): void
     {
         Schema::table('agency_employees', function (Blueprint $table): void {
-            $table->dropForeign('agency_employees_agency_role_id_foreign');
             $table->dropForeign('agency_employees_user_id_foreign');
             $table->dropForeign('agency_employees_agency_id_foreign');
             $table->dropIfExists();
