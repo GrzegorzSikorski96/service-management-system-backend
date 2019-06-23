@@ -20,8 +20,9 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table): void {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('description');
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->timestamps();
         });
     }

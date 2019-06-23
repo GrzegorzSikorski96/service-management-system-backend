@@ -25,7 +25,7 @@ class Ticket extends Model
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(TicketStatus::class);
     }
 
     public function device(): BelongsTo
@@ -33,7 +33,7 @@ class Ticket extends Model
         return $this->belongsTo(Device::class);
     }
 
-    public function agency(): BelongsToMany
+    public function agencies(): BelongsToMany
     {
         return $this->belongsToMany(Agency::class, 'agency_tickets');
     }

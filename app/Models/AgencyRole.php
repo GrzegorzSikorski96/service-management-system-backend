@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class AgencyRole extends Model
 {
     protected $table = 'agency_roles';
+    public $timestamps = false;
+
+    const MANAGER = 1;
+    const SERVICEMAN = 2;
 
     public function users(): BelongsToMany
     {

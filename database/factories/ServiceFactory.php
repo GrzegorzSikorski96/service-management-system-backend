@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+use Carbon\Carbon;
+use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factory;
+use Sms\Models\Service;
+
+/* @var $factory Factory */
+$factory->define(Service::class, function (Faker $faker) {
+    return [
+        'name' => $faker->company,
+        'description' => $faker->text(100),
+        'address' => $faker->address,
+        'owner_id' => 1,
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now()
+    ];
+});

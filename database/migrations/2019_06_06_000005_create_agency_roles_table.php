@@ -21,7 +21,6 @@ class CreateAgencyRolesTable extends Migration
         Schema::create('agency_roles', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->timestamps();
         });
     }
 

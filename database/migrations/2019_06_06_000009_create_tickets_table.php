@@ -27,8 +27,8 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
 
-            $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('statuses');
+            $table->unsignedBigInteger('ticket_status_id');
+            $table->foreign('ticket_status_id')->references('id')->on('ticket_statuses');
 
             $table->unsignedBigInteger('device_id');
             $table->foreign('device_id')->references('id')->on('devices');
@@ -46,7 +46,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::table('tickets', function (Blueprint $table): void {
             $table->dropForeign('tickets_device_id_foreign');
-            $table->dropForeign('tickets_status_id_foreign');
+            $table->dropForeign('tickets_ticket_status_id_foreign');
             $table->dropForeign('tickets_client_id_foreign');
             $table->dropIfExists();
         });

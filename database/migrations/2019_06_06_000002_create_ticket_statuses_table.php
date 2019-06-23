@@ -7,21 +7,21 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreatePasswordResetsTable
+ * Class CreateStatusesTable
  */
-class CreatePasswordResetsTable extends Migration
+class CreateTicketStatusesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
+
     public function up(): void
     {
-        Schema::create('password_resets', function (Blueprint $table): void {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::create('ticket_statuses', function (Blueprint $table): void {
+            $table->bigIncrements('id');
+            $table->string('name');
         });
     }
 
@@ -32,6 +32,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('ticket_statuses');
     }
 }
