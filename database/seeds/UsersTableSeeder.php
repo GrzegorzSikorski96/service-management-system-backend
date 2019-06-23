@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Sms\Models\User;
@@ -14,7 +16,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::firstOrCreate([
             'name' => 'Administrator',

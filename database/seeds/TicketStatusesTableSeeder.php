@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 use Sms\Models\TicketStatus;
 
+/**
+ * Class TicketStatusesTableSeeder
+ */
 class TicketStatusesTableSeeder extends Seeder
 {
     /**
@@ -10,7 +15,7 @@ class TicketStatusesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $statuses = [
             TicketStatus::PENDING => 'oczekujące',

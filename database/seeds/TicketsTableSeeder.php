@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 use Sms\Models\Ticket;
 
+/**
+ * Class TicketsTableSeeder
+ */
 class TicketsTableSeeder extends Seeder
 {
     /**
@@ -10,7 +15,7 @@ class TicketsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         factory(Ticket::class, 100)->create();
     }

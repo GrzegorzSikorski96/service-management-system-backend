@@ -10,8 +10,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @package Sms\Models
+ */
 class User extends Authenticatable
 {
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
     use Notifiable;
@@ -43,16 +50,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return HasMany
+     */
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class, 'created_by');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function role(): BelongsTo
     {
         return $this->belongsTo(AgencyRole::class, 'agency_role_id');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function agencies(): BelongsToMany
     {
         return $this->belongsToMany(Agency::class, 'agency_employees');

@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 use Sms\Models\AgencyRole;
 
+/**
+ * Class AgencyRolesTableSeeder
+ */
 class AgencyRolesTableSeeder extends Seeder
 {
     /**
@@ -10,7 +15,7 @@ class AgencyRolesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $roles = [
             AgencyRole::MANAGER => 'manager',

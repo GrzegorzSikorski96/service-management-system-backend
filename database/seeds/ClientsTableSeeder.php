@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Seeder;
 use Sms\Models\Client;
 
+/**
+ * Class ClientsTableSeeder
+ */
 class ClientsTableSeeder extends Seeder
 {
     /**
@@ -10,7 +15,7 @@ class ClientsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         factory(Client::class, 50)->create();
     }
