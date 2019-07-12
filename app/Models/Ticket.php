@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +13,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Class Ticket
  * @package Sms\Models
+ * @property int $id
+ * @property string $description
+ * @property string $note
+ * @property string $message
+ * @property int $client_id
+ * @property int $ticket_status_id
+ * @property int $device_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Ticket extends Model
 {

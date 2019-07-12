@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +16,15 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  * Class User
  * @package Sms\Models
+ * @property int $id
+ * @property string $name
+ * @property string $surname
+ * @property string $email
+ * @property string $password
+ * @property int $agency_role_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @mixin Eloquent
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -56,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function notes(): HasMany
     {
-        return $this->hasMany(Note::class, 'created_by');
+        return $this->hasMany(Note::class, 'author_id');
     }
 
     /**

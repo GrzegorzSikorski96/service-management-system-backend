@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Note
  * @package Sms\Models
+ * @property int $id
+ * @property string $content
+ * @property int $author_id
+ * @property int $ticket_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Note extends Model
 {
@@ -23,7 +30,7 @@ class Note extends Model
      */
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     /**

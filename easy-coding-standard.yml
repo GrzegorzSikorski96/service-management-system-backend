@@ -4,6 +4,9 @@ imports:
   - { resource: "./vendor/symplify/easy-coding-standard/config/set/psr12.yaml" }
   - { resource: "./vendor/symplify/easy-coding-standard/config/set/psr2.yaml" }
 parameters:
+  exclude_files:
+    - 'bootstrap/cache/*'
+    - 'storage/*'
   skip:
     # disable random annotation removal of this Sniff
     SlevomatCodingStandard\Sniffs\TypeHints\TypeHintDeclarationSniff.UselessDocComment: ~

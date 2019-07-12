@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,6 +12,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * Class Agency
  * @package Sms\Models
+ * @property int $id
+ * @property string $name
+ * @property string $address
+ * @property string $phone_number
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Agency extends Model
 {

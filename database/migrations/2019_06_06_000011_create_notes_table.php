@@ -22,8 +22,8 @@ class CreateNotesTable extends Migration
             $table->bigIncrements('id');
             $table->string('content');
 
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users');
+            $table->unsignedBigInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('users');
 
             $table->unsignedBigInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets');
@@ -41,7 +41,7 @@ class CreateNotesTable extends Migration
     {
         Schema::table('notes', function (Blueprint $table): void {
             $table->dropForeign('notes_ticket_id_foreign');
-            $table->dropForeign('notes_created_by_foreign');
+            $table->dropForeign('notes_author_id_foreign');
             $table->dropIfExists();
         });
     }

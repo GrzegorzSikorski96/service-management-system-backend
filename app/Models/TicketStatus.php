@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Class TicketStatus
  * @package Sms\Models
+ * @property int $id
+ * @property string $name
  */
 class TicketStatus extends Model
 {

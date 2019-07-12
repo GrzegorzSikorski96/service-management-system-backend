@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * Class AgencyRole
  * @package Sms\Models
+ * @property int $id
+ * @property string $name
  */
 class AgencyRole extends Model
 {
