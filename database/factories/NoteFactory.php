@@ -19,7 +19,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'content' => $faker->text(50),
-            'created_by' => User::inRandomOrder()->first(),
+            'author_id' => User::inRandomOrder()->first(),
             'ticket_id' => Ticket::inRandomOrder()->first(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

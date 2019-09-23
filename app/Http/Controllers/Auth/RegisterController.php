@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Carina\Http\Controllers\Auth;
+namespace Sms\Http\Controllers\Auth;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,7 @@ class RegisterController extends Controller
      */
     public function register(Register $request): JsonResponse
     {
-        $user = $this->create($request->only(['name', 'email', 'password', ]));
+        $this->create($request->only(['name', 'email', 'password', ]));
 
         return $this->registered()
             ?: $this->apiResponse

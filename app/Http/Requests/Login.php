@@ -13,17 +13,14 @@ class Login extends ApiRequest
     /**
      * @return bool
      */
-
     public function authorize(): bool
     {
         return true;
     }
 
-
     /**
      * @return array
      */
-
     public function rules(): array
     {
         return [

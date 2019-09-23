@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  * Class User
  * @package Sms\Models
+ * @mixin Eloquent\
  * @property int $id
  * @property string $name
  * @property string $surname
@@ -24,7 +25,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property int $agency_role_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @mixin Eloquent
  */
 class User extends Authenticatable implements JWTSubject
 {

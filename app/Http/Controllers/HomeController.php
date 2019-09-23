@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
+use Illuminate\Contracts\Support\Renderable;
+
 /**
  * Class HomeController
  * @package Sms\Http\Controllers
@@ -23,7 +25,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
