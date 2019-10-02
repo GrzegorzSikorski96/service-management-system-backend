@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 use Sms\Helpers\ApiResponse;
 use Tymon\JWTAuth\JWTGuard;
 
+/**
+ * Class Controller
+ * @package Sms\Http\Controllers
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

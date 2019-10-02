@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Ticket
@@ -22,13 +23,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $device_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property string $token
  */
 class Ticket extends Model
 {
+    use SoftDeletes;
+
     /**
      * @var string
      */
     protected $table = 'tickets';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'description',
+        'note',
+        'message',
+        'client_id',
+        'ticket_status_id',
+        'device_id',
+    ];
 
     /**
      * @return HasMany

@@ -28,6 +28,7 @@ class CreateAgenciesTable extends Migration
             $table->foreign('service_id')->references('id')->on('services');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

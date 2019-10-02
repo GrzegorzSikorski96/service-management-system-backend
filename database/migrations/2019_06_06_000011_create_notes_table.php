@@ -29,6 +29,7 @@ class CreateNotesTable extends Migration
             $table->foreign('ticket_id')->references('id')->on('tickets');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
