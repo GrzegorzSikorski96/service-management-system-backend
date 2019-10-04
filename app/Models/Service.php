@@ -27,6 +27,16 @@ class Service extends Model
     protected $table = 'services';
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'address',
+        'phone_number',
+        'service_id',
+    ];
+
+    /**
      * @return HasMany
      */
     public function agencies(): HasMany

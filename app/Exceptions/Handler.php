@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Sms\Helpers\ApiResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class Handler
@@ -76,6 +77,13 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof ModelNotFoundException) {
+            return $this->apiResponse
+                ->setMessage(__('messages.exceptions.not_found'))
+                ->setFailureStatus(404)
+                ->getResponse();
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
             return $this->apiResponse
                 ->setMessage(__('messages.exceptions.not_found'))
                 ->setFailureStatus(404)

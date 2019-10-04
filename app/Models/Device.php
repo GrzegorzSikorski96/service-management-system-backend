@@ -25,6 +25,15 @@ class Device extends Model
     use SoftDeletes;
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'description',
+        'serial_number',
+    ];
+
+    /**
      * @var string
      */
     protected $table = 'devices';

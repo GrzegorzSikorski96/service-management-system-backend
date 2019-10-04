@@ -6,6 +6,7 @@ namespace Sms\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Sms\Helpers\ApiResponse;
+use Sms\Http\Requests\Login;
 use Sms\Services\TokenService;
 
 /**
@@ -34,13 +35,12 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param Login $request
      * @return JsonResponse
      */
-    public function login(): JsonResponse
+    public function login(Login $request): JsonResponse
     {
-        $credentials = request(['email', 'password', ]);
-
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($request->only(['email', 'password', ]))) {
             return $this->apiResponse
                 ->setMessage(__('messages.login.fail'))
                 ->setFailureStatus(401)

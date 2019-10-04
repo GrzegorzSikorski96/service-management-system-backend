@@ -23,5 +23,17 @@ Route::group(
 Route::get('/tickets', 'TicketController@tickets');
 Route::get('/ticket/{id}', 'TicketController@ticket');
 Route::post('/ticket', 'TicketController@create');
-Route::put('/ticket', 'TicketController@edit');
+Route::put('/ticket/{id}', 'TicketController@edit');
 Route::delete('/ticket/{id}', 'TicketController@remove');
+
+Route::get('/clients', 'ClientController@clients');
+Route::get('/client/{id}', 'ClientController@client');
+Route::post('/client', 'ClientController@create');
+Route::put('/client/{id}', 'ClientController@edit');
+Route::delete('/client/{id}', 'ClientController@remove');
+
+Route::get('/devices', 'DeviceController@devices');
+Route::get('/device/{id}', 'DeviceController@device');
+Route::post('/device', 'DeviceController@create');
+Route::put('/device/{id}', 'DeviceController@edit');
+Route::delete('/device/{id}', 'DeviceController@remove');

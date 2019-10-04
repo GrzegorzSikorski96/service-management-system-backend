@@ -32,6 +32,17 @@ class Client extends Model
     protected $table = 'clients';
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'phone_number',
+        'description',
+        'address',
+    ];
+
+    /**
      * @return HasMany
      */
     public function tickets(): HasMany

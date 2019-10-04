@@ -7,43 +7,44 @@ namespace Sms\Http\Controllers;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Sms\Helpers\ApiResponse;
-use Sms\Http\Requests\Ticket;
+use Sms\Http\Requests\Client;
+use Sms\Services\ClientService;
 use Sms\Services\TicketService;
 
 /**
  * Class TicketController
  * @package Sms\Http\Controllers
  */
-class TicketController extends Controller
+class ClientController extends Controller
 {
     /**
      * @var TicketService
      */
-    protected $ticketService;
+    protected $clientService;
 
     /**
      * TicketController constructor.
      * @param ApiResponse $apiResponse
-     * @param TicketService $ticketService
+     * @param ClientService $clientService
      */
-    public function __construct(ApiResponse $apiResponse, TicketService $ticketService)
+    public function __construct(ApiResponse $apiResponse, ClientService $clientService)
     {
         parent::__construct($apiResponse);
-        $this->ticketService = $ticketService;
+        $this->clientService = $clientService;
     }
 
     /**
-     * @param Ticket $request
+     * @param Client $data
      * @return JsonResponse
      */
-    public function create(Ticket $request): JsonResponse
+    public function create(Client $data): JsonResponse
     {
-        $ticket = $this->ticketService->create($request->all());
+        $client = $this->clientService->create($data->all());
 
         return $this->apiResponse
-            ->setMessage(__('messages.ticket.create.success'))
+            ->setMessage(__('messages.client.create.success'))
             ->setData([
-                'ticket' => $ticket,
+                'client' => $client,
             ])
             ->setSuccessStatus()
             ->getResponse();
@@ -53,13 +54,13 @@ class TicketController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function ticket(int $id): JsonResponse
+    public function client(int $id): JsonResponse
     {
-        $ticket = $this->ticketService->ticket($id);
+        $client = $this->clientService->client($id);
 
         return $this->apiResponse
             ->setData([
-                'ticket' => $ticket,
+                'client' => $client,
             ])
             ->setSuccessStatus()
             ->getResponse();
@@ -68,26 +69,26 @@ class TicketController extends Controller
     /**
      * @return JsonResponse
      */
-    public function tickets(): JsonResponse
+    public function clients(): JsonResponse
     {
-        $tickets = $this->ticketService->tickets();
+        $clients = $this->clientService->clients();
 
         return $this->apiResponse
             ->setData([
-                'ticket' => $tickets,
+                'clients' => $clients,
             ])
             ->setSuccessStatus()
             ->getResponse();
     }
 
     /**
-     * @param Ticket $data
+     * @param Client $data
      * @param int $id
      * @return JsonResponse
      */
-    public function edit(Ticket $data, int $id): JsonResponse
+    public function edit(Client $data, int $id): JsonResponse
     {
-        $edited = $this->ticketService->edit($data->all(), $id);
+        $edited = $this->clientService->edit($data->all(), $id);
 
         return $this->apiResponse
             ->setMessage(__('messages.client.edit.success'))
@@ -105,10 +106,10 @@ class TicketController extends Controller
      */
     public function remove(int $id): JsonResponse
     {
-        $this->ticketService->remove($id);
+        $this->clientService->remove($id);
 
         return $this->apiResponse
-            ->setMessage(__('messages.ticket.remove.success'))
+            ->setMessage(__('messages.client.remove.success'))
             ->setSuccessStatus()
             ->getResponse();
     }
