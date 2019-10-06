@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Device;
 use Sms\Services\DeviceService;
-use Sms\Services\TicketService;
 
 /**
  * Class TicketController
@@ -18,7 +16,7 @@ use Sms\Services\TicketService;
 class DeviceController extends Controller
 {
     /**
-     * @var TicketService
+     * @var DeviceService
      */
     protected $deviceService;
 
@@ -51,12 +49,12 @@ class DeviceController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $deviceId
      * @return JsonResponse
      */
-    public function device(int $id): JsonResponse
+    public function device(int $deviceId): JsonResponse
     {
-        $device = $this->deviceService->device($id);
+        $device = $this->deviceService->device($deviceId);
 
         return $this->apiResponse
             ->setData([
@@ -83,12 +81,12 @@ class DeviceController extends Controller
 
     /**
      * @param Device $data
-     * @param int $id
+     * @param int $deviceId
      * @return JsonResponse
      */
-    public function edit(Device $data, int $id): JsonResponse
+    public function edit(Device $data, int $deviceId): JsonResponse
     {
-        $edited = $this->deviceService->edit($data->all(), $id);
+        $edited = $this->deviceService->edit($data->all(), $deviceId);
 
         return $this->apiResponse
             ->setMessage(__('messages.device.edit.success'))
@@ -100,13 +98,12 @@ class DeviceController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $deviceId
      * @return JsonResponse
-     * @throws Exception
      */
-    public function remove(int $id): JsonResponse
+    public function remove(int $deviceId): JsonResponse
     {
-        $this->deviceService->remove($id);
+        $this->deviceService->remove($deviceId);
 
         return $this->apiResponse
             ->setMessage(__('messages.device.remove.success'))

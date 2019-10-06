@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->foreign('agency_role_id')->references('id')->on('agency_roles');
 
             $table->timestamps();
+            $table->timestamp('blocked_at')->nullable()->default(null);
             $table->softDeletes();
         });
     }

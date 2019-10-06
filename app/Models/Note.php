@@ -29,6 +29,15 @@ class Note extends Model
     protected $table = 'notes';
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'content',
+        'author_id',
+        'ticket_id',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function author(): BelongsTo

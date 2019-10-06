@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Http\Requests;
 
-/**
- * Class Device
- * @package Sms\Http\Requests
- */
-class Device extends ApiRequest
+class User extends ApiRequest
 {
     /**
      * @return bool
@@ -25,8 +21,10 @@ class Device extends ApiRequest
     {
         return [
             'name' => 'required|string|min:3|max:100',
-            'description' => 'string|min:3|max:100',
-            'serial_number' => 'required|string|max:255',
+            'surname' => 'required|string|min:3|max:100',
+            'agency_role_id' => 'required|integer',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
         ];
     }
 }

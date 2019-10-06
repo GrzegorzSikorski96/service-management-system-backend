@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Sms\Models\Device;
 
 /**
- * Class TicketService
+ * Class DeviceService
  * @package Sms\Services
  */
 class DeviceService
@@ -28,13 +26,12 @@ class DeviceService
     }
 
     /**
-     * @param int $id
+     * @param int $deviceId
      * @return Device
-     * @throws ModelNotFoundException
      */
-    public function device(int $id): Device
+    public function device(int $deviceId): Device
     {
-        return Device::findOrFail($id);
+        return Device::findOrFail($deviceId);
     }
 
     /**
@@ -47,12 +44,12 @@ class DeviceService
 
     /**
      * @param array $data
-     * @param int $id
+     * @param int $deviceId
      * @return Device
      */
-    public function edit(array $data, int $id): Device
+    public function edit(array $data, int $deviceId): Device
     {
-        $device = $this->device($id);
+        $device = $this->device($deviceId);
         $device->fill($data);
         $device->save();
 
@@ -60,12 +57,11 @@ class DeviceService
     }
 
     /**
-     * @param int $id
-     * @throws Exception
+     * @param int $deviceId
      */
-    public function remove(int $id): void
+    public function remove(int $deviceId): void
     {
-        $device = Device::findOrFail($id);
+        $device = Device::findOrFail($deviceId);
         $device->delete();
     }
 }

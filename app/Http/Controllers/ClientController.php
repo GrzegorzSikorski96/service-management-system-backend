@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Client;
 use Sms\Services\ClientService;
-use Sms\Services\TicketService;
 
 /**
  * Class TicketController
@@ -18,7 +16,7 @@ use Sms\Services\TicketService;
 class ClientController extends Controller
 {
     /**
-     * @var TicketService
+     * @var ClientService
      */
     protected $clientService;
 
@@ -51,12 +49,12 @@ class ClientController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $clientId
      * @return JsonResponse
      */
-    public function client(int $id): JsonResponse
+    public function client(int $clientId): JsonResponse
     {
-        $client = $this->clientService->client($id);
+        $client = $this->clientService->client($clientId);
 
         return $this->apiResponse
             ->setData([
@@ -83,12 +81,12 @@ class ClientController extends Controller
 
     /**
      * @param Client $data
-     * @param int $id
+     * @param int $clientId
      * @return JsonResponse
      */
-    public function edit(Client $data, int $id): JsonResponse
+    public function edit(Client $data, int $clientId): JsonResponse
     {
-        $edited = $this->clientService->edit($data->all(), $id);
+        $edited = $this->clientService->edit($data->all(), $clientId);
 
         return $this->apiResponse
             ->setMessage(__('messages.client.edit.success'))
@@ -100,13 +98,12 @@ class ClientController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $clientId
      * @return JsonResponse
-     * @throws Exception
      */
-    public function remove(int $id): JsonResponse
+    public function remove(int $clientId): JsonResponse
     {
-        $this->clientService->remove($id);
+        $this->clientService->remove($clientId);
 
         return $this->apiResponse
             ->setMessage(__('messages.client.remove.success'))

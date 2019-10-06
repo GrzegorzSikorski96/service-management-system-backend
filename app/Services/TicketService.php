@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
-use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -51,6 +50,7 @@ class TicketService
      * @param array $data
      * @param int $id
      * @return Ticket
+     * @throws ModelNotFoundException
      */
     public function edit(array $data, int $id): Ticket
     {
@@ -63,11 +63,24 @@ class TicketService
 
     /**
      * @param int $id
-     * @throws Exception
+     * @throws ModelNotFoundException
      */
     public function remove(int $id): void
     {
         $ticket = Ticket::findOrFail($id);
         $ticket->delete();
+    }
+
+    /**
+     * @param int $ticketId
+     * @return Collection
+     */
+    public function notes(int $ticketId): Collection
+    {
+        $ticket = $this->ticket($ticketId);
+
+        return $ticket->notes()
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 }

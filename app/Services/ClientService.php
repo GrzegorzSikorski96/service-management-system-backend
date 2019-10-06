@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
-use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Sms\Models\Client;
 
 /**
- * Class TicketService
+ * Class ClientService
  * @package Sms\Services
  */
 class ClientService
@@ -28,13 +26,12 @@ class ClientService
     }
 
     /**
-     * @param int $id
+     * @param int $clientId
      * @return Client
-     * @throws ModelNotFoundException
      */
-    public function client(int $id): Client
+    public function client(int $clientId): Client
     {
-        return Client::findOrFail($id);
+        return Client::findOrFail($clientId);
     }
 
     /**
@@ -47,12 +44,12 @@ class ClientService
 
     /**
      * @param array $data
-     * @param int $id
+     * @param int $clientId
      * @return Client
      */
-    public function edit(array $data, int $id): Client
+    public function edit(array $data, int $clientId): Client
     {
-        $client = $this->client($id);
+        $client = $this->client($clientId);
         $client->fill($data);
         $client->save();
 
@@ -60,12 +57,11 @@ class ClientService
     }
 
     /**
-     * @param int $id
-     * @throws Exception
+     * @param int $clientId
      */
-    public function remove(int $id): void
+    public function remove(int $clientId): void
     {
-        $ticket = Client::findOrFail($id);
+        $ticket = Client::findOrFail($clientId);
         $ticket->delete();
     }
 }

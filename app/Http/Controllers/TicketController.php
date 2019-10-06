@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Ticket;
@@ -50,12 +49,12 @@ class TicketController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $ticketId
      * @return JsonResponse
      */
-    public function ticket(int $id): JsonResponse
+    public function ticket(int $ticketId): JsonResponse
     {
-        $ticket = $this->ticketService->ticket($id);
+        $ticket = $this->ticketService->ticket($ticketId);
 
         return $this->apiResponse
             ->setData([
@@ -82,15 +81,15 @@ class TicketController extends Controller
 
     /**
      * @param Ticket $data
-     * @param int $id
+     * @param int $ticketId
      * @return JsonResponse
      */
-    public function edit(Ticket $data, int $id): JsonResponse
+    public function edit(Ticket $data, int $ticketId): JsonResponse
     {
-        $edited = $this->ticketService->edit($data->all(), $id);
+        $edited = $this->ticketService->edit($data->all(), $ticketId);
 
         return $this->apiResponse
-            ->setMessage(__('messages.client.edit.success'))
+            ->setMessage(__('messages.ticket.edit.success'))
             ->setData([
                 'client' => $edited,
             ])
@@ -99,16 +98,27 @@ class TicketController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $ticketId
      * @return JsonResponse
-     * @throws Exception
      */
-    public function remove(int $id): JsonResponse
+    public function remove(int $ticketId): JsonResponse
     {
-        $this->ticketService->remove($id);
+        $this->ticketService->remove($ticketId);
 
         return $this->apiResponse
             ->setMessage(__('messages.ticket.remove.success'))
+            ->setSuccessStatus()
+            ->getResponse();
+    }
+
+    public function notes(int $ticketId): JsonResponse
+    {
+        $notes = $this->ticketService->notes($ticketId);
+
+        return $this->apiResponse
+            ->setData([
+                'notes' => $notes,
+            ])
             ->setSuccessStatus()
             ->getResponse();
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Device extends Model
 {
     use SoftDeletes;
+    use SoftCascadeTrait;
+
+    /**
+     * @var array
+     */
+    protected $softCascade = ['tickets'];
 
     /**
      * @var array

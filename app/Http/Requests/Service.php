@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Sms\Http\Requests;
 
 /**
- * Class Device
+ * Class Service
  * @package Sms\Http\Requests
  */
-class Device extends ApiRequest
+class Service extends ApiRequest
 {
     /**
      * @return bool
@@ -25,8 +25,9 @@ class Device extends ApiRequest
     {
         return [
             'name' => 'required|string|min:3|max:100',
-            'description' => 'string|min:3|max:100',
-            'serial_number' => 'required|string|max:255',
+            'description' => 'required|string|min:3|max:100',
+            'address' => 'required|string|max:255',
+            'owner_id' => 'required|integer',
         ];
     }
 }

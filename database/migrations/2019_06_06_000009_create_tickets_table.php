@@ -26,13 +26,13 @@ class CreateTicketsTable extends Migration
             $table->string('token')->unique();
 
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->unsignedBigInteger('ticket_status_id');
-            $table->foreign('ticket_status_id')->references('id')->on('ticket_statuses');
+            $table->foreign('ticket_status_id')->references('id')->on('ticket_statuses')->onDelete('cascade');
 
             $table->unsignedBigInteger('device_id');
-            $table->foreign('device_id')->references('id')->on('devices');
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

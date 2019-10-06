@@ -7,8 +7,6 @@ namespace Sms\Http\Requests;
 class Ticket extends ApiRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize(): bool
@@ -17,8 +15,6 @@ class Ticket extends ApiRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules(): array

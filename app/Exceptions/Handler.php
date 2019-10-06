@@ -11,6 +11,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\UnauthorizedException;
 use Sms\Helpers\ApiResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -87,6 +88,13 @@ class Handler extends ExceptionHandler
             return $this->apiResponse
                 ->setMessage(__('messages.exceptions.not_found'))
                 ->setFailureStatus(404)
+                ->getResponse();
+        }
+
+        if ($exception instanceof UnauthorizedException) {
+            return $this->apiResponse
+                ->setMessage(__('messages.exceptions.unauthorized'))
+                ->setFailureStatus(401)
                 ->getResponse();
         }
 

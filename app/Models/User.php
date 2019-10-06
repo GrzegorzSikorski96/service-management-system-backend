@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Models;
 
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,9 @@ class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes;
     use Notifiable;
+    use SoftCascadeTrait;
+
+    protected $softCascade = ['notes'];
 
     /**
      * @var string
