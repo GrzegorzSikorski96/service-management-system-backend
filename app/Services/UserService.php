@@ -6,6 +6,7 @@ namespace Sms\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Sms\Models\User;
 
 /**
@@ -20,10 +21,17 @@ class UserService
      */
     public function create(array $request): User
     {
-        $user = new User($request);
-        $user->save();
+        return User::create([
+            'name' => $request['name'],
+            'surname' => $request['surname'],
+            'email' => $request['email'],
+            'password' => $this->hashPassword($request['password']),
+            'agency_role_id' => $request['agency_role_id'],]);
+    }
 
-        return $user;
+    public function hashPassword(string $password): string
+    {
+        return Hash::make($password);
     }
 
     /**
@@ -51,7 +59,17 @@ class UserService
     public function edit(array $data, int $userId): User
     {
         $user = $this->user($userId);
-        $user->fill($data);
+
+        $user->name = $data['name'];
+        $user->surname = $data['surname'];
+
+        if ($user->email != $data['email']) {
+            $user->email = $data['email'];
+        }
+
+
+        $user->agency_role_id = $data['agency_role_id'];
+        $user->password = $this->hashPassword($data['password']);
         $user->save();
 
         return $user;
@@ -78,5 +96,14 @@ class UserService
         $user = User::findOrFail($userId);
         $user->blocked_at = null;
         $user->save();
+    }
+
+    public function notes(int $userId): Collection
+    {
+        $user = $this->user($userId);
+
+        return $user->notes()
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 }

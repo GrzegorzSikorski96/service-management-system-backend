@@ -127,4 +127,16 @@ class UserController extends Controller
             ->setSuccessStatus()
             ->getResponse();
     }
+
+    public function notes(int $userId): JsonResponse
+    {
+        $notes = $this->userService->notes($userId);
+
+        return $this->apiResponse
+            ->setData([
+                'notes' => $notes,
+            ])
+            ->setSuccessStatus()
+            ->getResponse();
+    }
 }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Sms\Http\Controllers\UserController;
 
 Route::group(
     /**
@@ -53,3 +54,12 @@ Route::get('/note/{id}', 'NoteController@note');
 Route::post('/note', 'NoteController@create');
 Route::put('/note/{id}', 'NoteController@edit');
 Route::delete('/note/{id}', 'NoteController@remove');
+
+Route::get('/user/{id}', 'UserController@user');
+Route::get('/users', 'UserController@users');
+Route::get('/user/{id}/notes', 'UserController@notes');
+Route::post('/user', 'UserController@create');
+Route::put('/user/{id}', 'UserController@edit');
+Route::post('/user/{id}/block', 'UserController@block');
+Route::post('/user/{id}/unblock', 'UserController@unblock');
+Route::delete('/user/{id}', 'UserController@remove');
