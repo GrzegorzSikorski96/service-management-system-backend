@@ -26,7 +26,7 @@ class UserService
             'surname' => $request['surname'],
             'email' => $request['email'],
             'password' => $this->hashPassword($request['password']),
-            'agency_role_id' => $request['agency_role_id'],]);
+            'agency_role_id' => $request['agency_role_id']]);
     }
 
     public function hashPassword(string $password): string
