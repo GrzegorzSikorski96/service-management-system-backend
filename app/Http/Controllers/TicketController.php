@@ -110,16 +110,4 @@ class TicketController extends Controller
             ->setSuccessStatus()
             ->getResponse();
     }
-
-    public function notes(int $ticketId): JsonResponse
-    {
-        $notes = $this->ticketService->notes($ticketId);
-
-        return $this->apiResponse
-            ->setData([
-                'notes' => $notes,
-            ])
-            ->setSuccessStatus()
-            ->getResponse();
-    }
 }

@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\UnauthorizedException;
 use Sms\Helpers\ApiResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**
  * Class Handler
@@ -91,7 +92,7 @@ class Handler extends ExceptionHandler
                 ->getResponse();
         }
 
-        if ($exception instanceof UnauthorizedException) {
+        if ($exception instanceof UnauthorizedException || $exception instanceof UnauthorizedHttpException) {
             return $this->apiResponse
                 ->setMessage(__('messages.exceptions.unauthorized'))
                 ->setFailureStatus(401)

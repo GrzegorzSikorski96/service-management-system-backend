@@ -18,6 +18,7 @@ class AgencyRolesTableSeeder extends Seeder
     public function run(): void
     {
         $roles = [
+            AgencyRole::ADMINISTRATOR => 'administrator',
             AgencyRole::MANAGER => 'manager',
             AgencyRole::SERVICEMAN => 'serwisant'
         ];

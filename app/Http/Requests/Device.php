@@ -26,7 +26,7 @@ class Device extends ApiRequest
         return [
             'name' => 'required|string|min:3|max:100',
             'description' => 'string|min:3|max:100',
-            'serial_number' => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255|unique:devices',
         ];
     }
 }

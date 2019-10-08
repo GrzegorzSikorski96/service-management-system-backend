@@ -69,7 +69,7 @@ class Ticket extends Model
     /**
      * @return BelongsTo
      */
-    public function status(): BelongsTo
+    public function ticketStatus(): BelongsTo
     {
         return $this->belongsTo(TicketStatus::class);
     }

@@ -2,28 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Sms\Http\Middleware;
+namespace Sms\Http\Middleware\Roles;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
-use Tymon\JWTAuth\Http\Middleware\Authenticate as Middleware;
+use Sms\Models\AgencyRole;
 
-class Authenticate extends Middleware
+class Serviceman
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+     * Handle an incoming request.
      *
      * @param Request $request
      * @param Closure $next
-     * @return string
+     * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $this->authenticate($request);
+        $available = [
+            AgencyRole::ADMINISTRATOR,
+            AgencyRole::MANAGER,
+            AgencyRole::SERVICEMAN,
+        ];
 
-        if (Auth::user()->blocked_at == null) {
+        if (in_array(Auth::user()->role->id, $available)) {
             return $next($request);
         }
 

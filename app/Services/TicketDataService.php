@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Sms\Services;
+
+use Illuminate\Support\Collection;
+use Sms\Models\Ticket;
+use Sms\Models\TicketStatus;
+
+/**
+ * Class TicketDataService
+ * @package Sms\Services
+ */
+class TicketDataService
+{
+    /**
+     * @var AgencyService
+     */
+    protected $ticketService;
+
+    /**
+     * TicketDataService constructor.
+     * @param TicketService $ticketService
+     */
+    public function __construct(TicketService $ticketService)
+    {
+        $this->ticketService = $ticketService;
+    }
+
+    /**
+     * @param int $ticketId
+     * @return Collection
+     */
+    public function notes(int $ticketId): Collection
+    {
+        $ticket = $this->ticketService->ticket($ticketId);
+
+        return $ticket->notes;
+    }
+
+    /**
+     * @param string $token
+     * @return TicketStatus
+     */
+    public function status(string $token): TicketStatus
+    {
+        $ticket = Ticket::whereToken($token)->firstOrFail();
+
+        return $ticket->ticketStatus;
+    }
+}

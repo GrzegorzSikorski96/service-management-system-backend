@@ -8,22 +8,23 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
-use Tymon\JWTAuth\Http\Middleware\Authenticate as Middleware;
+use Sms\Models\Note;
 
-class Authenticate extends Middleware
+class CheckNoteAuthor
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+     * Handle an incoming request.
      *
      * @param Request $request
      * @param Closure $next
-     * @return string
+     * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $this->authenticate($request);
+        $note = Note::findOrFail($request->route('noteId'));
 
-        if (Auth::user()->blocked_at == null) {
+        if (Auth::id() == $note->author_id) {
+            $request['note'] = $note;
             return $next($request);
         }
 

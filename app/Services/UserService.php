@@ -29,6 +29,10 @@ class UserService
             'agency_role_id' => $request['agency_role_id']]);
     }
 
+    /**
+     * @param string $password
+     * @return string
+     */
     public function hashPassword(string $password): string
     {
         return Hash::make($password);
@@ -67,7 +71,6 @@ class UserService
             $user->email = $data['email'];
         }
 
-
         $user->agency_role_id = $data['agency_role_id'];
         $user->password = $this->hashPassword($data['password']);
         $user->save();
@@ -84,6 +87,9 @@ class UserService
         $user->delete();
     }
 
+    /**
+     * @param int $userId
+     */
     public function block(int $userId): void
     {
         $user = User::findOrFail($userId);
@@ -91,6 +97,9 @@ class UserService
         $user->save();
     }
 
+    /**
+     * @param int $userId
+     */
     public function unblock(int $userId): void
     {
         $user = User::findOrFail($userId);
@@ -98,6 +107,10 @@ class UserService
         $user->save();
     }
 
+    /**
+     * @param int $userId
+     * @return Collection
+     */
     public function notes(int $userId): Collection
     {
         $user = $this->user($userId);

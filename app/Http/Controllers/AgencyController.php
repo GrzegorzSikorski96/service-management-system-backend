@@ -10,7 +10,7 @@ use Sms\Http\Requests\Agency;
 use Sms\Services\AgencyService;
 
 /**
- * Class TicketController
+ * Class AgencyController
  * @package Sms\Http\Controllers
  */
 class AgencyController extends Controller
@@ -21,7 +21,7 @@ class AgencyController extends Controller
     protected $agencyService;
 
     /**
-     * TicketController constructor.
+     * AgencyController constructor.
      * @param ApiResponse $apiResponse
      * @param AgencyService $agencyService
      */

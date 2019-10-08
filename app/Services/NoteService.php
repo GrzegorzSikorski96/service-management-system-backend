@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
+use Exception;
+use Illuminate\Support\Facades\Auth;
 use Sms\Models\Note;
 
 /**
@@ -19,6 +21,7 @@ class NoteService
     public function create(array $request): Note
     {
         $note = new Note($request);
+        $note->author_id = Auth::id();
         $note->save();
 
         return $note;
@@ -35,12 +38,12 @@ class NoteService
 
     /**
      * @param array $data
-     * @param int $noteId
+     * @param Note $note
      * @return Note
      */
-    public function edit(array $data, int $noteId): Note
+    public function edit(array $data, Note $note): Note
     {
-        $note = $this->note($noteId);
+//        $note = $this->note($noteId);
         $note->fill($data);
         $note->save();
 
@@ -48,11 +51,11 @@ class NoteService
     }
 
     /**
-     * @param int $noteId
+     * @param Note $note
+     * @throws Exception
      */
-    public function remove(int $noteId): void
+    public function remove(Note $note): void
     {
-        $note = Note::findOrFail($noteId);
         $note->delete();
     }
 }

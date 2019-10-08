@@ -5,9 +5,15 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    /**
-     * @param $router
-     */
+    [
+        'middleware' => 'api',
+    ],
+    function (): void {
+        Route::get('/ticket/{token}/status', 'TicketDataController@status');
+    }
+);
+
+Route::group(
     [
         'middleware' => 'api',
         'prefix' => 'auth'
@@ -20,45 +26,92 @@ Route::group(
         Route::post('/me', 'AuthController@me');
     }
 );
-Route::get('/tickets', 'TicketController@tickets');
-Route::get('/ticket/{ticketId}', 'TicketController@ticket');
-Route::get('/ticket/{id}/notes', 'TicketController@notes');
-Route::post('/ticket', 'TicketController@create');
-Route::put('/ticket/{ticketId}', 'TicketController@edit');
-Route::delete('/ticket/{ticketId}', 'TicketController@remove');
 
-Route::get('/clients', 'ClientController@clients');
-Route::get('/client/{clientId}', 'ClientController@client');
-Route::post('/client', 'ClientController@create');
-Route::put('/client/{clientId}', 'ClientController@edit');
-Route::delete('/client/{clientId}', 'ClientController@remove');
+Route::group(
+    [
+        'middleware' => ['auth', 'api']
+    ],
+    function (): void {
+        Route::group(
+            [
+                'middleware' => 'role.serviceman',
+            ],
+            function (): void {
+                Route::get('/user/{userId}', 'UserController@user');
+                Route::put('/user/{userId}', 'UserController@edit');
 
-Route::get('/devices', 'DeviceController@devices');
-Route::get('/device/{deviceId}', 'DeviceController@device');
-Route::post('/device', 'DeviceController@create');
-Route::put('/device/{deviceId}', 'DeviceController@edit');
-Route::delete('/device/{deviceId}', 'DeviceController@remove');
+                Route::get('/user/{userId}/notes', 'UserDataController@notes');
 
-Route::get('/service', 'ServiceController@service');
-Route::post('/service', 'ServiceController@initialize');
-Route::put('/service', 'ServiceController@edit');
+                Route::get('/ticket/{ticketId}', 'TicketController@ticket');
+                Route::put('/ticket/{ticketId}', 'TicketController@edit');
+                Route::post('/ticket', 'TicketController@create');
+                Route::delete('/ticket/{ticketId}', 'TicketController@remove');
 
-Route::get('/agency/{agencyId}', 'AgencyController@agency');
-Route::get('/agencies', 'AgencyController@agencies');
-Route::post('/agency', 'AgencyController@create');
-Route::put('/agency/{agencyId}', 'AgencyController@edit');
-Route::delete('/agency/{agencyId}', 'AgencyController@remove');
+                Route::get('/ticket/{id}/notes', 'TicketDataController@notes');
 
-Route::get('/note/{id}', 'NoteController@note');
-Route::post('/note', 'NoteController@create');
-Route::put('/note/{id}', 'NoteController@edit');
-Route::delete('/note/{id}', 'NoteController@remove');
+                Route::get('/note/{noteId}', 'NoteController@note');
+                Route::put('/note/{noteId}', 'NoteController@edit');
+                Route::post('/note', 'NoteController@create');
+                Route::delete('/note/{noteId}', 'NoteController@remove');
 
-Route::get('/user/{id}', 'UserController@user');
-Route::get('/users', 'UserController@users');
-Route::get('/user/{id}/notes', 'UserController@notes');
-Route::post('/user', 'UserController@create');
-Route::put('/user/{id}', 'UserController@edit');
-Route::post('/user/{id}/block', 'UserController@block');
-Route::post('/user/{id}/unblock', 'UserController@unblock');
-Route::delete('/user/{id}', 'UserController@remove');
+                Route::get('/device/{deviceId}', 'DeviceController@device');
+                Route::put('/device/{deviceId}', 'DeviceController@edit');
+                Route::post('/device', 'DeviceController@create');
+                Route::delete('/device/{deviceId}', 'DeviceController@remove');
+
+                Route::get('/device/{deviceId}/tickets', 'DeviceDataController@tickets');
+
+                Route::get('/client/{clientId}', 'ClientController@client');
+                Route::put('/client/{clientId}', 'ClientController@edit');
+                Route::post('/client', 'ClientController@create');
+                Route::delete('/client/{clientId}', 'ClientController@remove');
+
+                Route::get('/client/{clientId}/tickets', 'ClientDataController@tickets');
+
+                Route::get('/agency/{agencyId}/clients', 'AgencyDataController@clients');
+                Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets');
+                Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices');
+            }
+        );
+
+        Route::group(
+            [
+                'middleware' => 'role.administrator',
+            ],
+            function (): void {
+                Route::get('/agencies', 'AgencyController@agencies');
+
+                Route::get('/service', 'ServiceController@service');
+                Route::put('/service', 'ServiceController@edit');
+                Route::post('/service', 'ServiceController@initialize');
+
+                Route::get('/users', 'UserController@users');
+
+                Route::post('/agency', 'AgencyController@create');
+                Route::delete('/agency/{agencyId}', 'AgencyController@remove');
+
+                Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees');
+
+                Route::get('/clients', 'ClientController@clients');
+                Route::get('/devices', 'DeviceController@devices');
+                Route::get('/tickets', 'TicketController@tickets');
+            }
+        );
+
+        Route::group(
+            [
+                'middleware' => 'role.manager'
+            ],
+            function (): void {
+                Route::post('/user', 'UserController@create');
+                Route::delete('/user/{userId}', 'UserController@remove');
+
+                Route::get('/agency/{agencyId}', 'AgencyController@agency');
+                Route::put('/agency/{agencyId}', 'AgencyController@edit');
+
+                Route::post('/user/{userId}/block', 'UserController@block');
+                Route::post('/user/{userId}/unblock', 'UserController@unblock');
+            }
+        );
+    }
+);

@@ -27,11 +27,15 @@ class AgencyRole extends Model
     /**
      * @var integer
      */
-    const MANAGER = 1;
+    const ADMINISTRATOR = 1;
     /**
      * @var integer
      */
-    const SERVICEMAN = 2;
+    const MANAGER = 2;
+    /**
+     * @var integer
+     */
+    const SERVICEMAN = 3;
 
     /**
      * @return BelongsToMany

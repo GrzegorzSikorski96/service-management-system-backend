@@ -21,7 +21,7 @@ class UserController extends Controller
     protected $userService;
 
     /**
-     * TicketController constructor.
+     * UserController constructor.
      * @param ApiResponse $apiResponse
      * @param UserService $userService
      */
@@ -124,18 +124,6 @@ class UserController extends Controller
 
         return $this->apiResponse
             ->setMessage(__('messages.user.remove.success'))
-            ->setSuccessStatus()
-            ->getResponse();
-    }
-
-    public function notes(int $userId): JsonResponse
-    {
-        $notes = $this->userService->notes($userId);
-
-        return $this->apiResponse
-            ->setData([
-                'notes' => $notes,
-            ])
             ->setSuccessStatus()
             ->getResponse();
     }

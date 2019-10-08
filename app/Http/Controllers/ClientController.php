@@ -10,7 +10,7 @@ use Sms\Http\Requests\Client;
 use Sms\Services\ClientService;
 
 /**
- * Class TicketController
+ * Class ClientController
  * @package Sms\Http\Controllers
  */
 class ClientController extends Controller
@@ -21,7 +21,7 @@ class ClientController extends Controller
     protected $clientService;
 
     /**
-     * TicketController constructor.
+     * ClientController constructor.
      * @param ApiResponse $apiResponse
      * @param ClientService $clientService
      */

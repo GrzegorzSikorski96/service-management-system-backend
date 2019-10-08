@@ -10,7 +10,7 @@ use Sms\Http\Requests\Device;
 use Sms\Services\DeviceService;
 
 /**
- * Class TicketController
+ * Class DeviceController
  * @package Sms\Http\Controllers
  */
 class DeviceController extends Controller
@@ -21,7 +21,7 @@ class DeviceController extends Controller
     protected $deviceService;
 
     /**
-     * TicketController constructor.
+     * DeviceController constructor.
      * @param ApiResponse $apiResponse
      * @param DeviceService $deviceService
      */

@@ -29,6 +29,9 @@ class ServiceService
         return $service;
     }
 
+    /**
+     * @return Service
+     */
     public function service(): Service
     {
         return Service::first();

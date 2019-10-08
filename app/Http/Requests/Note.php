@@ -25,8 +25,7 @@ class Note extends ApiRequest
     {
         return [
             'content' => 'required|string|max:200',
-            'author_id' => 'required|integer',
-            'ticket_id' => 'required|integer',
+            'ticket_id' => 'required|integer|exists:tickets,id',
         ];
     }
 }

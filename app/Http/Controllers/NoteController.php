@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Note;
 use Sms\Services\NoteService;
@@ -21,7 +23,7 @@ class NoteController extends Controller
     protected $noteService;
 
     /**
-     * TicketController constructor.
+     * NoteController constructor.
      * @param ApiResponse $apiResponse
      * @param NoteService $noteService
      */
@@ -29,6 +31,8 @@ class NoteController extends Controller
     {
         parent::__construct($apiResponse);
         $this->noteService = $noteService;
+
+        $this->middleware('note.author', ['only' => ['edit', 'remove']]);
     }
 
     /**
@@ -66,12 +70,11 @@ class NoteController extends Controller
 
     /**
      * @param Note $data
-     * @param int $noteId
      * @return JsonResponse
      */
-    public function edit(Note $data, int $noteId): JsonResponse
+    public function edit(Note $data): JsonResponse
     {
-        $edited = $this->noteService->edit($data->all(), $noteId);
+        $edited = $this->noteService->edit($data->all(), $data['note']);
 
         return $this->apiResponse
             ->setMessage(__('messages.note.edit.success'))
@@ -83,12 +86,13 @@ class NoteController extends Controller
     }
 
     /**
-     * @param int $noteId
+     * @param Request $data
      * @return JsonResponse
+     * @throws Exception
      */
-    public function remove(int $noteId): JsonResponse
+    public function remove(Request $data): JsonResponse
     {
-        $this->noteService->remove($noteId);
+        $this->noteService->remove($data['note']);
 
         return $this->apiResponse
             ->setMessage(__('messages.note.remove.success'))
