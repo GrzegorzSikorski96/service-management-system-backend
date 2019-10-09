@@ -23,9 +23,9 @@ class Ticket extends ApiRequest
             'note' => 'string|max:150',
             'message' => 'string|max:255',
             'description' => 'string|min:3|max:100',
-            'client_id' => 'required|integer',
-            'ticket_status_id' => 'required|integer',
-            'device_id' => 'required|integer',
+            'client_id' => 'required|integer|exist:clients,id',
+            'ticket_status_id' => 'required|integer|exist:ticket_statuses,id',
+            'device_id' => 'required|integer|exist:devices,id',
         ];
     }
 }

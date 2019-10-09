@@ -25,7 +25,7 @@ class Agency extends ApiRequest
     {
         return [
             'name' => 'required|string|min:3|max:100',
-            'address' => 'required|string|max:255',
+            'address' => 'required|string|max:255|unique:agencies',
             'phone_number' => 'required|string',
             'service_id' => 'required|integer',
         ];

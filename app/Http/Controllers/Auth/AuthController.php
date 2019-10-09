@@ -43,7 +43,7 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($request->only(['email', 'password', ]))) {
             return $this->apiResponse
                 ->setMessage(__('messages.login.fail'))
-                ->setFailureStatus(401)
+                ->setFailureStatus(400)
                 ->getResponse();
         }
 

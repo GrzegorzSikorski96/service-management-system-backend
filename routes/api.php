@@ -9,6 +9,7 @@ Route::group(
         'middleware' => 'api',
     ],
     function (): void {
+        Route::get('/', 'ExceptionController@getEmptyResponse');
         Route::get('/ticket/{token}/status', 'TicketDataController@status');
     }
 );
