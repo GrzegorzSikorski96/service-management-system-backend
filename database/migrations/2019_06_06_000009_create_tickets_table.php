@@ -21,7 +21,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('description');
-            $table->string('note');
+            $table->string('additional_information');
             $table->string('message');
             $table->string('token')->unique();
 

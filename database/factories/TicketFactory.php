@@ -21,7 +21,7 @@ $factory->define(
     function (Faker $faker) {
         return [
             'description' => $faker->text(80),
-            'note' => $faker->text(30),
+            'additional_information' => $faker->text(30),
             'message' => $faker->text(50),
             'token' => Str::random(15),
             'client_id' => Client::inRandomOrder()->first(),

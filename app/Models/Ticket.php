@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package Sms\Models
  * @property int $id
  * @property string $description
- * @property string $note
+ * @property string $additional_information
  * @property string $message
  * @property int $client_id
  * @property int $ticket_status_id
@@ -43,7 +43,7 @@ class Ticket extends Model
      */
     protected $fillable = [
         'description',
-        'note',
+        'additional_information',
         'message',
         'client_id',
         'ticket_status_id',

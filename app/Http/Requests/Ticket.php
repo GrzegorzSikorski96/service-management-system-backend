@@ -20,7 +20,7 @@ class Ticket extends ApiRequest
     public function rules(): array
     {
         return [
-            'note' => 'string|max:150',
+            'additional_information' => 'string|max:150',
             'message' => 'string|max:255',
             'description' => 'string|min:3|max:100',
             'client_id' => 'required|integer|exist:clients,id',
