@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Http;
 
+use Barryvdh\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         TrustProxies::class,
+        HandleCors::class,
     ];
 
     /**
