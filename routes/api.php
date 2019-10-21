@@ -72,6 +72,8 @@ Route::group(
                 Route::get('/agency/{agencyId}/clients', 'AgencyDataController@clients');
                 Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets');
                 Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices');
+
+                Route::get('/ticketStatuses', 'TicketStatusController@statuses');
             }
         );
 

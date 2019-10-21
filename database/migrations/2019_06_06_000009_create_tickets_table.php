@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
             $table->bigIncrements('id');
             $table->string('description');
             $table->string('additional_information');
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->string('token')->unique();
 
             $table->unsignedBigInteger('client_id');

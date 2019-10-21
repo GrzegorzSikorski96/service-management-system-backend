@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Sms\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Login;
+use Sms\Models\User;
 use Sms\Services\TokenService;
 
 /**
@@ -47,7 +49,7 @@ class AuthController extends Controller
                 ->getResponse();
         }
 
-        $user = $this->guard()->user();
+        $user = User::with('role')->find(Auth::id());
 
         return $this->apiResponse
             ->setMessage(__('messages.login.success'))
