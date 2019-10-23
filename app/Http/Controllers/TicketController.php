@@ -73,7 +73,7 @@ class TicketController extends Controller
 
         return $this->apiResponse
             ->setData([
-                'ticket' => $tickets,
+                'tickets' => $tickets,
             ])
             ->setSuccessStatus()
             ->getResponse();

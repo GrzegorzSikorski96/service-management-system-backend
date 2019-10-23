@@ -35,7 +35,7 @@ class TicketService
      */
     public function ticket(int $id): Ticket
     {
-        return Ticket::findOrFail($id);
+        return Ticket::with('client', 'device', 'notes.author')->findOrFail($id);
     }
 
     /**
@@ -43,7 +43,7 @@ class TicketService
      */
     public function tickets(): Collection
     {
-        return Ticket::all();
+        return Ticket::with(['client', 'device', 'ticketStatus'])->get();
     }
 
     /**

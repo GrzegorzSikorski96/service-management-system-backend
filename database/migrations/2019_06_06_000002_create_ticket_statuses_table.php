@@ -22,6 +22,7 @@ class CreateTicketStatusesTable extends Migration
         Schema::create('ticket_statuses', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('color')->nullable();
         });
     }
 

@@ -10,14 +10,14 @@ use Sms\Models\Client;
 /** @var Factory $factory */
 $factory->define(
     /**
-    * @param Faker $faker
-    * @return array
-    */
+     * @param Faker $faker
+     * @return array
+     */
     Client::class,
     function (Faker $faker) {
         return [
             'name' => $faker->firstName,
-            'email' => $faker->lastName,
+            'email' => $faker->safeEmail,
             'phone_number' => $faker->phoneNumber,
             'description' => $faker->text(30),
             'address' => $faker->address,

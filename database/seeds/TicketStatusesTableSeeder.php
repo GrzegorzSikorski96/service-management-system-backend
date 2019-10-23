@@ -25,10 +25,19 @@ class TicketStatusesTableSeeder extends Seeder
             TicketStatus::CANCELED => 'anulowane',
         ];
 
+        $colors = [
+            TicketStatus::PENDING => 'pink',
+            TicketStatus::DURING => 'warning',
+            TicketStatus::READY => 'info',
+            TicketStatus::ENDED => 'success',
+            TicketStatus::CANCELED => 'error',
+        ];
+
         foreach ($statuses as $key => $value) {
             TicketStatus::firstOrCreate([
                 'id' => $key,
                 'name' => $value,
+                'color' => $colors[$key],
             ]);
         }
     }
