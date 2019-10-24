@@ -31,7 +31,7 @@ class ClientService
      */
     public function client(int $clientId): Client
     {
-        return Client::findOrFail($clientId);
+        return Client::with(['tickets.ticketStatus'])->findOrFail($clientId);
     }
 
     /**

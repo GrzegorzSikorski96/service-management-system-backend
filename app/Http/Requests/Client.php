@@ -25,9 +25,9 @@ class Client extends ApiRequest
     {
         return [
             'name' => 'required|string|min:3|max:100',
-            'email' => 'required|string|email|max:255',
+            'email' => 'nullable|string|email|max:255',
             'phone_number' => 'required|string',
-            'description' => 'string|min:3|max:100',
+            'description' => 'nullable|string|max:100',
             'address' => 'required|string|min:3',
         ];
     }
