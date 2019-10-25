@@ -31,7 +31,7 @@ class DeviceService
      */
     public function device(int $deviceId): Device
     {
-        return Device::findOrFail($deviceId);
+        return Device::with(['tickets.ticketStatus'])->findOrFail($deviceId);
     }
 
     /**
