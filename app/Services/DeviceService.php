@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\DeviceCreate;
 use Sms\Events\DeviceUpdate;
 use Sms\Models\Device;
 
@@ -22,6 +23,8 @@ class DeviceService
     {
         $device = new Device($request);
         $device->save();
+
+        event(new DeviceCreate($device));
 
         return $device;
     }
