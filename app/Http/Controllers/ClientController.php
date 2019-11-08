@@ -84,9 +84,9 @@ class ClientController extends Controller
      * @param int $clientId
      * @return JsonResponse
      */
-    public function edit(Client $data, int $clientId): JsonResponse
+    public function edit(Client $data): JsonResponse
     {
-        $edited = $this->clientService->edit($data->all(), $clientId);
+        $edited = $this->clientService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.client.edit.success'))

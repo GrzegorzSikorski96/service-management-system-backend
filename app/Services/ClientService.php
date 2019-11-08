@@ -47,9 +47,9 @@ class ClientService
      * @param int $clientId
      * @return Client
      */
-    public function edit(array $data, int $clientId): Client
+    public function edit(array $data): Client
     {
-        $client = $this->client($clientId);
+        $client = $this->client($data['id']);
         $client->fill($data);
         $client->save();
 

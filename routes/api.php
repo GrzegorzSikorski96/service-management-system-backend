@@ -63,7 +63,7 @@ Route::group(
                 Route::get('/device/{deviceId}/tickets', 'DeviceDataController@tickets');
 
                 Route::get('/client/{clientId}', 'ClientController@client');
-                Route::put('/client/{clientId}', 'ClientController@edit');
+                Route::put('/client', 'ClientController@edit');
                 Route::post('/client', 'ClientController@create');
                 Route::delete('/client/{clientId}', 'ClientController@remove');
 
