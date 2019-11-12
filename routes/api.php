@@ -67,6 +67,11 @@ Route::group(
                 Route::post('/client', 'ClientController@create');
                 Route::delete('/client/{clientId}', 'ClientController@remove');
 
+
+                Route::get('/clients', 'ClientController@clients');
+                Route::get('/devices', 'DeviceController@devices');
+                Route::get('/tickets', 'TicketController@tickets');
+
                 Route::get('/client/{clientId}/tickets', 'ClientDataController@tickets');
 
                 Route::get('/agency/{agencyId}/clients', 'AgencyDataController@clients');
@@ -95,9 +100,6 @@ Route::group(
 
                 Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees');
 
-                Route::get('/clients', 'ClientController@clients');
-                Route::get('/devices', 'DeviceController@devices');
-                Route::get('/tickets', 'TicketController@tickets');
             }
         );
 

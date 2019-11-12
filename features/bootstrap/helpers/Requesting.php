@@ -110,4 +110,16 @@ trait Requesting
     {
         Assert::assertEquals(__('messages.' . $message), $this->getResponseContent()['message']);
     }
+
+    /**
+     * @Given authenticated by email :email and password :password
+     * @param string $email
+     * @param string $password
+     */
+    public function authenticatedByEmailAndPassword(string $email, string $password)
+    {
+        $jwtToken = auth()->attempt(['email' => $email, 'password' => $password]);
+
+        $this->request->headers->add(['Authorization' => 'Bearer ' . $jwtToken]);
+    }
 }
