@@ -42,7 +42,7 @@ class AuthController extends Controller
      */
     public function login(Login $request): JsonResponse
     {
-        if (!$token = auth()->attempt($request->only(['email', 'password',]))) {
+        if (!$token = auth()->attempt($request->only(['email', 'password', ]))) {
             return $this->apiResponse
                 ->setMessage(__('messages.login.fail'))
                 ->setFailureStatus(400)

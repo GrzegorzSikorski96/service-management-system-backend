@@ -116,7 +116,7 @@ trait Requesting
      * @param string $email
      * @param string $password
      */
-    public function authenticatedByEmailAndPassword(string $email, string $password)
+    public function authenticatedByEmailAndPassword(string $email, string $password): void
     {
         $jwtToken = auth()->attempt(['email' => $email, 'password' => $password]);
 

@@ -99,7 +99,6 @@ Route::group(
                 Route::delete('/agency/{agencyId}', 'AgencyController@remove');
 
                 Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees');
-
             }
         );
 
