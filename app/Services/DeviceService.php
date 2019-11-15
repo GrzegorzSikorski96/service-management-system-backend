@@ -51,9 +51,9 @@ class DeviceService
      * @param int $deviceId
      * @return Device
      */
-    public function edit(array $data, int $deviceId): Device
+    public function edit(array $data): Device
     {
-        $device = $this->device($deviceId);
+        $device = $this->device($data['id']);
         $device->fill($data);
         $device->save();
 

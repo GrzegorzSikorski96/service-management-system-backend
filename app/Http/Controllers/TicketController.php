@@ -84,9 +84,9 @@ class TicketController extends Controller
      * @param int $ticketId
      * @return JsonResponse
      */
-    public function edit(Ticket $data, int $ticketId): JsonResponse
+    public function edit(Ticket $data): JsonResponse
     {
-        $edited = $this->ticketService->edit($data->all(), $ticketId);
+        $edited = $this->ticketService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.ticket.edit.success'))

@@ -52,9 +52,9 @@ class TicketService
      * @return Ticket
      * @throws ModelNotFoundException
      */
-    public function edit(array $data, int $id): Ticket
+    public function edit(array $data): Ticket
     {
-        $ticket = $this->ticket($id);
+        $ticket = $this->ticket($data['id']);
         $ticket->fill($data);
         $ticket->save();
 

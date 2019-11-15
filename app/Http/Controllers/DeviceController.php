@@ -84,9 +84,9 @@ class DeviceController extends Controller
      * @param int $deviceId
      * @return JsonResponse
      */
-    public function edit(Device $data, int $deviceId): JsonResponse
+    public function edit(Device $data): JsonResponse
     {
-        $edited = $this->deviceService->edit($data->all(), $deviceId);
+        $edited = $this->deviceService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.device.edit.success'))

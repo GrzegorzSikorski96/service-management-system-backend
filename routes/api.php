@@ -44,7 +44,7 @@ Route::group(
                 Route::get('/user/{userId}/notes', 'UserDataController@notes');
 
                 Route::get('/ticket/{ticketId}', 'TicketController@ticket');
-                Route::put('/ticket/{ticketId}', 'TicketController@edit');
+                Route::put('/ticket', 'TicketController@edit');
                 Route::post('/ticket', 'TicketController@create');
                 Route::delete('/ticket/{ticketId}', 'TicketController@remove');
 
@@ -56,7 +56,7 @@ Route::group(
                 Route::delete('/note/{noteId}', 'NoteController@remove');
 
                 Route::get('/device/{deviceId}', 'DeviceController@device');
-                Route::put('/device/{deviceId}', 'DeviceController@edit');
+                Route::put('/device/', 'DeviceController@edit');
                 Route::post('/device', 'DeviceController@create');
                 Route::delete('/device/{deviceId}', 'DeviceController@remove');
 
