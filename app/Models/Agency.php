@@ -56,7 +56,7 @@ class Agency extends Model
      */
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class, 'agency_clients');
+        return $this->belongsToMany(Client::class, 'agency_clients')->withTimestamps();
     }
 
     /**
@@ -64,7 +64,7 @@ class Agency extends Model
      */
     public function devices(): BelongsToMany
     {
-        return $this->belongsToMany(Device::class, 'agency_devices');
+        return $this->belongsToMany(Device::class, 'agency_devices')->withTimestamps();
     }
 
     /**
@@ -72,7 +72,7 @@ class Agency extends Model
      */
     public function tickets(): BelongsToMany
     {
-        return $this->belongsToMany(Ticket::class, 'agency_tickets');
+        return $this->belongsToMany(Ticket::class, 'agency_tickets')->withTimestamps();
     }
 
     /**
@@ -80,6 +80,6 @@ class Agency extends Model
      */
     public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'agency_employees');
+        return $this->belongsToMany(User::class);
     }
 }

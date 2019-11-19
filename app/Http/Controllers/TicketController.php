@@ -81,7 +81,6 @@ class TicketController extends Controller
 
     /**
      * @param Ticket $data
-     * @param int $ticketId
      * @return JsonResponse
      */
     public function edit(Ticket $data): JsonResponse

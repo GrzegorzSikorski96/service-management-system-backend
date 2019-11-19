@@ -25,6 +25,7 @@ class CreateClientsTable extends Migration
             $table->string('phone_number');
             $table->string('description')->nullable();
             $table->string('address');
+            $table->string('NIP')->unique()->nullable();
 
             $table->timestamps();
             $table->softDeletes();

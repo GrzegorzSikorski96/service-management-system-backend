@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Sms\Events\DeviceCreate;
 use Sms\Events\DeviceUpdate;
+use Sms\Models\AgencyRole;
 use Sms\Models\Device;
 
 /**
@@ -43,7 +45,13 @@ class DeviceService
      */
     public function devices(): Collection
     {
-        return Device::all();
+        $user = Auth::user();
+
+        if ($user->role->id == AgencyRole::ADMINISTRATOR) {
+            return Device::all();
+        }
+
+        return $user->agency->devices;
     }
 
     /**
@@ -69,5 +77,23 @@ class DeviceService
     {
         $device = Device::findOrFail($deviceId);
         $device->delete();
+    }
+
+    /**
+     * @param array $data
+     * @return Device
+     */
+    public function addBySerialNumber(array $data): Device
+    {
+        $agency = Auth::user()->agency;
+
+        $device = Device::where('serial_number', $data['serial_number'])->firstOrFail();
+
+        $agency->devices()->syncWithoutDetaching($device);
+        $agency->tickets()->syncWithoutDetaching($device->tickets);
+
+        $agency->save();
+
+        return $device;
     }
 }

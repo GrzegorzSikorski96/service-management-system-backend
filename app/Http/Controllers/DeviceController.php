@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Device;
 use Sms\Services\DeviceService;
@@ -81,7 +82,6 @@ class DeviceController extends Controller
 
     /**
      * @param Device $data
-     * @param int $deviceId
      * @return JsonResponse
      */
     public function edit(Device $data): JsonResponse
@@ -107,6 +107,22 @@ class DeviceController extends Controller
 
         return $this->apiResponse
             ->setMessage(__('messages.device.remove.success'))
+            ->setSuccessStatus()
+            ->getResponse();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addBySerialNumber(Request $request): JsonResponse
+    {
+        $device = $this->deviceService->addBySerialNumber($request->all());
+
+        return $this->apiResponse
+            ->setData([
+                'device' => $device,
+            ])
             ->setSuccessStatus()
             ->getResponse();
     }

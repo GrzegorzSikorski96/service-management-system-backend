@@ -10,16 +10,15 @@ use Sms\Models\Service;
 /** @var Factory $factory */
 $factory->define(
     /**
-    * @param Faker $faker
-    * @return array
-    */
+     * @param Faker $faker
+     * @return array
+     */
     Service::class,
     function (Faker $faker) {
         return [
             'name' => $faker->company,
             'description' => $faker->text(100),
             'address' => $faker->address,
-            'owner_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];

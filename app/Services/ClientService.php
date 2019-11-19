@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Sms\Models\AgencyRole;
 use Sms\Models\Client;
 
 /**
@@ -39,12 +41,17 @@ class ClientService
      */
     public function clients(): Collection
     {
-        return Client::all();
+        $user = Auth::user();
+
+        if ($user->role->id == AgencyRole::ADMINISTRATOR) {
+            return Client::all();
+        }
+
+        return $user->agency->clients;
     }
 
     /**
      * @param array $data
-     * @param int $clientId
      * @return Client
      */
     public function edit(array $data): Client
@@ -63,5 +70,23 @@ class ClientService
     {
         $ticket = Client::findOrFail($clientId);
         $ticket->delete();
+    }
+
+    /**
+     * @param array $data
+     * @return Client
+     */
+    public function addByNumber(array $data): Client
+    {
+        $agency = Auth::user()->agency;
+
+        $client = Client::where('NIP', $data['number'])->firstOrFail();
+
+        $agency->clients()->syncWithoutDetaching($client);
+        $agency->tickets()->syncWithoutDetaching($client->tickets);
+
+        $agency->save();
+
+        return $client;
     }
 }

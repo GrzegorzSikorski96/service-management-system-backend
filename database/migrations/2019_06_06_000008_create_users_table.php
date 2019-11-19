@@ -25,11 +25,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
 
+            $table->unsignedBigInteger('agency_id')->nullable();
+            $table->foreign('agency_id')->references('id')->on('agencies');
+
             $table->unsignedBigInteger('agency_role_id');
             $table->foreign('agency_role_id')->references('id')->on('agency_roles');
 
             $table->timestamps();
             $table->timestamp('blocked_at')->nullable()->default(null);
+
             $table->softDeletes();
         });
     }
@@ -42,6 +46,7 @@ class CreateUsersTable extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table): void {
+            $table->dropForeign('users_agency_id_foreign');
             $table->dropForeign('users_agency_role_id_foreign');
             $table->dropIfExists();
         });

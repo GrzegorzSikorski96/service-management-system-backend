@@ -8,7 +8,6 @@ use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +23,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $surname
  * @property string $email
  * @property string $password
+ * @property int $agency_id
  * @property int $agency_role_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -83,11 +83,11 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return BelongsToMany
+     * @return BelongsTo
      */
-    public function agencies(): BelongsToMany
+    public function agency(): BelongsTo
     {
-        return $this->belongsToMany(Agency::class, 'agency_employees');
+        return $this->belongsTo(Agency::class);
     }
 
     /**

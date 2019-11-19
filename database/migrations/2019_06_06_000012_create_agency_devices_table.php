@@ -27,6 +27,8 @@ class CreateAgencyDevicesTable extends Migration
             $table->unsignedBigInteger("agency_id");
             $table->foreign('agency_id')->references('id')->on('agencies');
 
+            $table->unique(['device_id', 'agency_id']);
+
             $table->timestamps();
         });
     }

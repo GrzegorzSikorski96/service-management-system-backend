@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Client;
 use Sms\Services\ClientService;
@@ -81,7 +82,6 @@ class ClientController extends Controller
 
     /**
      * @param Client $data
-     * @param int $clientId
      * @return JsonResponse
      */
     public function edit(Client $data): JsonResponse
@@ -107,6 +107,22 @@ class ClientController extends Controller
 
         return $this->apiResponse
             ->setMessage(__('messages.client.remove.success'))
+            ->setSuccessStatus()
+            ->getResponse();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addByNumber(Request $request): JsonResponse
+    {
+        $client = $this->clientService->addByNumber($request->all());
+
+        return $this->apiResponse
+            ->setData([
+                'client' => $client,
+            ])
             ->setSuccessStatus()
             ->getResponse();
     }

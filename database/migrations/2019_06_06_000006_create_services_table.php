@@ -24,9 +24,6 @@ class CreateServicesTable extends Migration
             $table->string('description');
             $table->string('address');
 
-            $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('id')->on('users');
-
             $table->timestamps();
         });
     }
@@ -39,7 +36,6 @@ class CreateServicesTable extends Migration
     public function down(): void
     {
         Schema::table('services', function (Blueprint $table): void {
-            $table->dropForeign('services_owner_id_foreign');
             $table->dropIfExists();
         });
     }

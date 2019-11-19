@@ -58,6 +58,7 @@ Route::group(
                 Route::get('/device/{deviceId}', 'DeviceController@device');
                 Route::put('/device/', 'DeviceController@edit');
                 Route::post('/device', 'DeviceController@create');
+                Route::post('/device/serialNumber', 'DeviceController@addBySerialNumber');
                 Route::delete('/device/{deviceId}', 'DeviceController@remove');
 
                 Route::get('/device/{deviceId}/tickets', 'DeviceDataController@tickets');
@@ -65,6 +66,7 @@ Route::group(
                 Route::get('/client/{clientId}', 'ClientController@client');
                 Route::put('/client', 'ClientController@edit');
                 Route::post('/client', 'ClientController@create');
+                Route::post('/client/number', 'ClientController@addByNumber');
                 Route::delete('/client/{clientId}', 'ClientController@remove');
 
 
