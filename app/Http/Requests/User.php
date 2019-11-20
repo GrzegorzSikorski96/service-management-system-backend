@@ -24,7 +24,7 @@ class User extends ApiRequest
             'surname' => 'required|string|min:3|max:100',
             'agency_role_id' => 'required|integer',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ];
     }
 }

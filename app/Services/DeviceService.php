@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Sms\Events\DeviceCreate;
-use Sms\Events\DeviceUpdate;
-use Sms\Models\AgencyRole;
 use Sms\Models\Device;
 
 /**
  * Class DeviceService
  * @package Sms\Services
  */
-class DeviceService
+class DeviceService extends BaseService
 {
     /**
      * @param array $request
@@ -26,7 +22,9 @@ class DeviceService
         $device = new Device($request);
         $device->save();
 
-        event(new DeviceCreate($device));
+        $agency = $this->agencyService->agency($request['agency_id']);
+        $agency->devices()->attach($device);
+        $agency->save();
 
         return $device;
     }
@@ -37,7 +35,11 @@ class DeviceService
      */
     public function device(int $deviceId): Device
     {
-        return Device::with(['tickets.ticketStatus'])->findOrFail($deviceId);
+        if ($this->currentUser()->isAdmin()) {
+            return Device::with(['tickets.ticketStatus'])->findOrFail($deviceId);
+        }
+
+        return $this->currentUser()->agency->devices()->with('tickets.ticketStatus')->findOrFail($deviceId);
     }
 
     /**
@@ -45,18 +47,15 @@ class DeviceService
      */
     public function devices(): Collection
     {
-        $user = Auth::user();
-
-        if ($user->role->id == AgencyRole::ADMINISTRATOR) {
+        if ($this->currentUser()->isAdmin()) {
             return Device::all();
         }
 
-        return $user->agency->devices;
+        return $this->currentUser()->agency->devices;
     }
 
     /**
      * @param array $data
-     * @param int $deviceId
      * @return Device
      */
     public function edit(array $data): Device
@@ -64,8 +63,6 @@ class DeviceService
         $device = $this->device($data['id']);
         $device->fill($data);
         $device->save();
-
-        event(new DeviceUpdate($device));
 
         return $device;
     }
@@ -85,12 +82,15 @@ class DeviceService
      */
     public function addBySerialNumber(array $data): Device
     {
-        $agency = Auth::user()->agency;
-
         $device = Device::where('serial_number', $data['serial_number'])->firstOrFail();
 
+        $agency = $this->agencyService->agency($data['agency_id']);
         $agency->devices()->syncWithoutDetaching($device);
         $agency->tickets()->syncWithoutDetaching($device->tickets);
+
+        foreach ($device->tickets as $ticket) {
+            $agency->clients()->syncWithoutDetaching($ticket->client);
+        }
 
         $agency->save();
 

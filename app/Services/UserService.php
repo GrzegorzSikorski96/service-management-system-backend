@@ -7,13 +7,14 @@ namespace Sms\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Sms\Models\AgencyRole;
 use Sms\Models\User;
 
 /**
  * Class AgencyService
  * @package Sms\Services
  */
-class UserService
+class UserService extends BaseService
 {
     /**
      * @param array $request
@@ -24,9 +25,12 @@ class UserService
         return User::create([
             'name' => $request['name'],
             'surname' => $request['surname'],
+            'phone_number' => $request['phone_number'],
             'email' => $request['email'],
             'password' => $this->hashPassword($request['password']),
-            'agency_role_id' => $request['agency_role_id']]);
+            'agency_role_id' => $request['agency_role_id'],
+            'agency_id' => $request['agency_id']
+        ]);
     }
 
     /**
@@ -44,7 +48,11 @@ class UserService
      */
     public function user(int $userId): User
     {
-        return User::findOrFail($userId);
+        if ($this->currentUser()->role->id == AgencyRole::ADMINISTRATOR) {
+            return User::with('notes.author', 'notes.ticket')->findOrFail($userId);
+        }
+
+        return $this->currentUser()->agency->employees()->with('notes.author', 'notes.ticket')->findOrFail($userId);
     }
 
     /**
@@ -52,7 +60,11 @@ class UserService
      */
     public function users(): Collection
     {
-        return User::all();
+        if ($this->currentUser()->role->id == AgencyRole::ADMINISTRATOR) {
+            return User::with('role')->get();
+        }
+
+        return $this->currentUser()->agency->employees()->with('role')->get();
     }
 
     /**

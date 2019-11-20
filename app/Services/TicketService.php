@@ -6,16 +6,14 @@ namespace Sms\Services;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Sms\Models\AgencyRole;
 use Sms\Models\Ticket;
 
 /**
  * Class TicketService
  * @package Sms\Services
  */
-class TicketService
+class TicketService extends BaseService
 {
     /**
      * @param array $request
@@ -45,25 +43,25 @@ class TicketService
      */
     public function tickets(): Collection
     {
-        $user = Auth::user();
-
-        if ($user->role->id == AgencyRole::ADMINISTRATOR) {
+        if ($this->currentUser()->isAdmin()) {
             return Ticket::with(['client', 'device', 'ticketStatus'])->get();
         }
 
-        return $user->agency->tickets()->with(['client', 'device', 'ticketStatus'])->get();
+        return $this->currentUser()->agency->tickets()->with(['client', 'device', 'ticketStatus'])->get();
     }
 
     /**
      * @param array $data
-     * @param int $id
      * @return Ticket
-     * @throws ModelNotFoundException
      */
     public function edit(array $data): Ticket
     {
         $ticket = $this->ticket($data['id']);
-        $ticket->fill($data);
+
+        $ticket->description = $data['description'];
+        $ticket->additional_information = $data['additional_information'];
+        $ticket->ticket_status_id = $data['ticket_status_id'];
+
         $ticket->save();
 
         return $ticket;

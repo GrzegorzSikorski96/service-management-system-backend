@@ -34,6 +34,9 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
     use SoftCascadeTrait;
 
+    /**
+     * @var array
+     */
     protected $softCascade = ['notes'];
 
     /**
@@ -49,6 +52,8 @@ class User extends Authenticatable implements JWTSubject
         'surname',
         'email',
         'agency_role_id',
+        'agency_id',
+        'phone_number',
         'password',
     ];
 
@@ -88,6 +93,14 @@ class User extends Authenticatable implements JWTSubject
     public function agency(): BelongsTo
     {
         return $this->belongsTo(Agency::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role->id == AgencyRole::ADMINISTRATOR;
     }
 
     /**

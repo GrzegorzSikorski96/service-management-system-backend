@@ -15,12 +15,12 @@ class AgencyClientsTableSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws Exception
      */
     public function run(): void
     {
-        foreach (Client::all() as $client) {
-            $client->agencies()->attach(Agency::inRandomOrder()->first());
-            $client->save();
+        foreach (Agency::all() as $agency) {
+            $agency->clients()->attach(factory(Client::class, random_int(3, 12))->create());
         }
     }
 }

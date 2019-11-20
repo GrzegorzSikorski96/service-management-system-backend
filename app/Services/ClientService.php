@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Sms\Models\AgencyRole;
 use Sms\Models\Client;
 
 /**
  * Class ClientService
  * @package Sms\Services
  */
-class ClientService
+class ClientService extends BaseService
 {
     /**
      * @param array $request
@@ -24,6 +22,10 @@ class ClientService
         $ticket = new Client($request);
         $ticket->save();
 
+        $agency = $this->agencyService->agency($request['agency_id']);
+        $agency->clients()->attach($request['agency_id']);
+        $agency->save();
+
         return $ticket;
     }
 
@@ -33,7 +35,10 @@ class ClientService
      */
     public function client(int $clientId): Client
     {
-        return Client::with(['tickets.ticketStatus'])->findOrFail($clientId);
+        if ($this->currentUser()->isAdmin()) {
+            return Client::with(['tickets.ticketStatus'])->findOrFail($clientId);
+        }
+        return $this->currentUser()->agency->clients()->with('tickets.ticketStatus')->findOrFail($clientId);
     }
 
     /**
@@ -41,13 +46,11 @@ class ClientService
      */
     public function clients(): Collection
     {
-        $user = Auth::user();
-
-        if ($user->role->id == AgencyRole::ADMINISTRATOR) {
+        if ($this->currentUser()->isAdmin()) {
             return Client::all();
         }
 
-        return $user->agency->clients;
+        return $this->currentUser()->agency->clients;
     }
 
     /**
@@ -78,12 +81,15 @@ class ClientService
      */
     public function addByNumber(array $data): Client
     {
-        $agency = Auth::user()->agency;
-
         $client = Client::where('NIP', $data['number'])->firstOrFail();
 
+        $agency = $this->agencyService->agency($data['agency_id']);
         $agency->clients()->syncWithoutDetaching($client);
         $agency->tickets()->syncWithoutDetaching($client->tickets);
+
+        foreach ($client->tickets as $ticket) {
+            $agency->devices()->syncWithoutDetaching($ticket->device);
+        }
 
         $agency->save();
 

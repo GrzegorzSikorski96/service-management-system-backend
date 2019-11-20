@@ -95,11 +95,11 @@ Route::group(
                 Route::put('/service', 'ServiceController@edit');
                 Route::post('/service', 'ServiceController@initialize');
 
-                Route::get('/users', 'UserController@users');
 
                 Route::post('/agency', 'AgencyController@create');
-                Route::delete('/agency/{agencyId}', 'AgencyController@remove');
 
+                Route::get('/agency/roles', 'AgencyRoleController@roles');
+                Route::delete('/agency/{agencyId}', 'AgencyController@remove');
                 Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees');
             }
         );
@@ -109,6 +109,7 @@ Route::group(
                 'middleware' => 'role.manager'
             ],
             function (): void {
+                Route::get('/users', 'UserController@users');
                 Route::post('/user', 'UserController@create');
                 Route::delete('/user/{userId}', 'UserController@remove');
 

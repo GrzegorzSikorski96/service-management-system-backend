@@ -15,12 +15,12 @@ class AgencyDevicesTableSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws Exception
      */
     public function run(): void
     {
-        foreach (Device::all() as $device) {
-            $device->agencies()->attach(Agency::inRandomOrder()->first());
-            $device->save();
+        foreach (Agency::all() as $agency) {
+            $agency->devices()->attach(factory(Device::class, random_int(1, 13))->create());
         }
     }
 }
