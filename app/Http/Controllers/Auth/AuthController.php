@@ -49,7 +49,7 @@ class AuthController extends Controller
                 ->getResponse();
         }
 
-        $user = User::with('role')->find(Auth::id());
+        $user = User::with('role')->find(auth()->id());
 
         return $this->apiResponse
             ->setMessage(__('messages.login.success'))

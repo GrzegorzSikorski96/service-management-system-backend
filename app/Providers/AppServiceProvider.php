@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Sms\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Sms\Models\Ticket;
+use Sms\Observers\TicketObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Ticket::observe(TicketObserver::class);
     }
 }

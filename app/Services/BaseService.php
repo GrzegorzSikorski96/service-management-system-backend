@@ -16,14 +16,20 @@ class BaseService
      * @var AgencyService
      */
     protected $agencyService;
+    /**
+     * @var NoteService
+     */
+    protected $noteService;
 
     /**
      * BaseService constructor.
      * @param AgencyService $agencyService
+     * @param NoteService $noteService
      */
-    public function __construct(AgencyService $agencyService)
+    public function __construct(AgencyService $agencyService, NoteService $noteService)
     {
         $this->agencyService = $agencyService;
+        $this->noteService = $noteService;
     }
 
     /**

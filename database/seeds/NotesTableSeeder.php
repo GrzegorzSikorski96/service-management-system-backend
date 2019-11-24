@@ -20,6 +20,11 @@ class NotesTableSeeder extends Seeder
     public function run(): void
     {
         foreach (Ticket::all() as $ticket) {
+            factory(Note::class, 1)->create([
+                'content' => 'Utworzono zgłoszenie.',
+                'ticket_id' => $ticket->id
+            ]);
+
             factory(Note::class, random_int(1, 7))->create([
                 'ticket_id' => $ticket->id
             ]);

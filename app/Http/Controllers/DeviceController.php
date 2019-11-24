@@ -120,6 +120,7 @@ class DeviceController extends Controller
         $device = $this->deviceService->addBySerialNumber($request->all());
 
         return $this->apiResponse
+            ->setMessage(__('messages.device.add.success'))
             ->setData([
                 'device' => $device,
             ])

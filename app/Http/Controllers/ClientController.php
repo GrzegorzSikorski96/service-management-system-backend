@@ -120,6 +120,7 @@ class ClientController extends Controller
         $client = $this->clientService->addByNumber($request->all());
 
         return $this->apiResponse
+            ->setMessage(__('messages.client.add.success'))
             ->setData([
                 'client' => $client,
             ])

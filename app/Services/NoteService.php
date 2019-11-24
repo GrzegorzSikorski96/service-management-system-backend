@@ -21,7 +21,7 @@ class NoteService
     public function create(array $request): Note
     {
         $note = new Note($request);
-        $note->author_id = Auth::id();
+        $note->author_id = auth()->id();
         $note->save();
 
         return $note;
@@ -43,7 +43,6 @@ class NoteService
      */
     public function edit(array $data, Note $note): Note
     {
-//        $note = $this->note($noteId);
         $note->fill($data);
         $note->save();
 

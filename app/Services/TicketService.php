@@ -25,6 +25,10 @@ class TicketService extends BaseService
         $ticket->token = Str::random(15);
         $ticket->save();
 
+        foreach ($ticket->device->agencies as $agency) {
+            $agency->tickets()->syncWithoutDetaching($ticket);
+        }
+
         return $ticket;
     }
 
@@ -35,7 +39,7 @@ class TicketService extends BaseService
      */
     public function ticket(int $id): Ticket
     {
-        return Ticket::with('client', 'device', 'notes.author')->findOrFail($id);
+        return Ticket::with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
     }
 
     /**
