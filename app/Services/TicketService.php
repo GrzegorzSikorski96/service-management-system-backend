@@ -39,7 +39,10 @@ class TicketService extends BaseService
      */
     public function ticket(int $id): Ticket
     {
-        return Ticket::with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
+        if ($this->currentUser()->isAdmin()) {
+            return Ticket::with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
+        }
+        return $this->currentUser()->agency->tickets()->with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
     }
 
     /**
@@ -63,6 +66,7 @@ class TicketService extends BaseService
         $ticket = $this->ticket($data['id']);
 
         $ticket->description = $data['description'];
+        $ticket->message = $data['message'];
         $ticket->additional_information = $data['additional_information'];
         $ticket->ticket_status_id = $data['ticket_status_id'];
 

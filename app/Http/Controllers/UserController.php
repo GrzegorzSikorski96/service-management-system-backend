@@ -94,7 +94,7 @@ class UserController extends Controller
             ->getResponse();
     }
 
-    public function block($userId): JsonResponse
+    public function block(int $userId): JsonResponse
     {
         $this->userService->block($userId);
 
@@ -104,7 +104,7 @@ class UserController extends Controller
             ->getResponse();
     }
 
-    public function unblock($userId): JsonResponse
+    public function unblock(int $userId): JsonResponse
     {
         $this->userService->unblock($userId);
 

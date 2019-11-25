@@ -6,6 +6,7 @@ namespace Sms\Services;
 
 use Illuminate\Support\Collection;
 use Sms\Models\Agency;
+use Sms\Models\Service;
 
 /**
  * Class AgencyService
@@ -20,6 +21,7 @@ class AgencyService
     public function create(array $request): Agency
     {
         $agency = new Agency($request);
+        $agency->service_id = Service::firstOrFail()->id;
         $agency->save();
 
         return $agency;
@@ -43,14 +45,13 @@ class AgencyService
     }
 
     /**
-     * @param array $data
-     * @param int $agencyId
+     * @param array $request
      * @return Agency
      */
-    public function edit(array $data, int $agencyId): Agency
+    public function edit(array $request): Agency
     {
-        $agency = $this->agency($agencyId);
-        $agency->fill($data);
+        $agency = $this->agency($request['id']);
+        $agency->fill($request);
         $agency->save();
 
         return $agency;

@@ -49,7 +49,7 @@ class UserService extends BaseService
     public function user(int $userId): User
     {
         if ($this->currentUser()->role->id == AgencyRole::ADMINISTRATOR) {
-            return User::with('notes.author', 'notes.ticket')->findOrFail($userId);
+            return User::with('notes.author', 'notes.ticket', 'role')->findOrFail($userId);
         }
 
         return $this->currentUser()->agency->employees()->with('notes.author', 'notes.ticket')->findOrFail($userId);
@@ -92,11 +92,22 @@ class UserService extends BaseService
 
     /**
      * @param int $userId
+     * @return bool
      */
-    public function remove(int $userId): void
+    public function remove(int $userId): bool
     {
-        $user = User::findOrFail($userId);
-        $user->delete();
+        if (auth()->user()->isAdmin()) {
+            $user = User::findOrFail($userId);
+        } else {
+            $user = auth()->user()->agency->employees()->findOrFail($userId);
+        }
+
+        if (auth()->id() != $userId) {
+            $user->delete();
+            return true;
+        }
+
+        return false;
     }
 
     /**

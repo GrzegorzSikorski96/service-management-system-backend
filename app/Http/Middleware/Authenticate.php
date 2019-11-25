@@ -23,7 +23,7 @@ class Authenticate extends Middleware
     {
         $this->authenticate($request);
 
-        if (Auth::user()->blocked_at == null) {
+        if (auth()->user()->blocked_at == null) {
             return $next($request);
         }
 

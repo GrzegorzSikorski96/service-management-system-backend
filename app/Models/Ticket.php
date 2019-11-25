@@ -55,7 +55,7 @@ class Ticket extends Model
      */
     public function notes(): HasMany
     {
-        return $this->hasMany(Note::class)->orderByDesc('created_at');
+        return $this->hasMany(Note::class);
     }
 
     /**

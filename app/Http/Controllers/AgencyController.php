@@ -84,9 +84,9 @@ class AgencyController extends Controller
      * @param int $agencyId
      * @return JsonResponse
      */
-    public function edit(Agency $data, int $agencyId): JsonResponse
+    public function edit(Agency $data): JsonResponse
     {
-        $edited = $this->agencyService->edit($data->all(), $agencyId);
+        $edited = $this->agencyService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.agency.edit.success'))

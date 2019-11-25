@@ -38,49 +38,66 @@ Route::group(
                 'middleware' => 'role.serviceman',
             ],
             function (): void {
-                Route::get('/user/{userId}', 'UserController@user');
-                Route::put('/user/{userId}', 'UserController@edit');
+                Route::get('/user/{userId}', 'UserController@user')->where('id', '[0-9]+');
+                Route::put('/user/{userId}', 'UserController@edit')->where('id', '[0-9]+');
 
-                Route::get('/user/{userId}/notes', 'UserDataController@notes');
+                Route::get('/user/{userId}/notes', 'UserDataController@notes')->where('userId', '[0-9]+');
 
-                Route::get('/ticket/{ticketId}', 'TicketController@ticket');
+                Route::get('/ticket/{ticketId}', 'TicketController@ticket')->where('ticketId', '[0-9]+');
                 Route::put('/ticket', 'TicketController@edit');
                 Route::post('/ticket', 'TicketController@create');
-                Route::delete('/ticket/{ticketId}', 'TicketController@remove');
+                Route::delete('/ticket/{ticketId}', 'TicketController@remove')->where('ticketId', '[0-9]+');
 
-                Route::get('/ticket/{id}/notes', 'TicketDataController@notes');
+                Route::get('/ticket/{ticketId}/notes', 'TicketDataController@notes')->where('ticketId', '[0-9]+');
 
-                Route::get('/note/{noteId}', 'NoteController@note');
-                Route::put('/note/{noteId}', 'NoteController@edit');
+                Route::get('/note/{noteId}', 'NoteController@note')->where('noteId', '[0-9]+');
+                Route::put('/note/{noteId}', 'NoteController@edit')->where('noteId', '[0-9]+');
                 Route::post('/note', 'NoteController@create');
-                Route::delete('/note/{noteId}', 'NoteController@remove');
+                Route::delete('/note/{noteId}', 'NoteController@remove')->where('noteId', '[0-9]+');
 
-                Route::get('/device/{deviceId}', 'DeviceController@device');
+                Route::get('/device/{deviceId}', 'DeviceController@device')->where('deviceId', '[0-9]+');
                 Route::put('/device/', 'DeviceController@edit');
                 Route::post('/device', 'DeviceController@create');
                 Route::post('/device/serialNumber', 'DeviceController@addBySerialNumber');
-                Route::delete('/device/{deviceId}', 'DeviceController@remove');
+                Route::delete('/device/{deviceId}', 'DeviceController@remove')->where('deviceId', '[0-9]+');
 
-                Route::get('/device/{deviceId}/tickets', 'DeviceDataController@tickets');
+                Route::get('/device/{deviceId}/tickets', 'DeviceDataController@tickets')->where('deviceId', '[0-9]+');
 
-                Route::get('/client/{clientId}', 'ClientController@client');
+                Route::get('/client/{clientId}', 'ClientController@client')->where('clientId', '[0-9]+');
                 Route::put('/client', 'ClientController@edit');
                 Route::post('/client', 'ClientController@create');
                 Route::post('/client/number', 'ClientController@addByNumber');
-                Route::delete('/client/{clientId}', 'ClientController@remove');
+                Route::delete('/client/{clientId}', 'ClientController@remove')->where('clientId', '[0-9]+');
 
 
                 Route::get('/clients', 'ClientController@clients');
                 Route::get('/devices', 'DeviceController@devices');
                 Route::get('/tickets', 'TicketController@tickets');
 
-                Route::get('/client/{clientId}/tickets', 'ClientDataController@tickets');
+                Route::get('/client/{clientId}/tickets', 'ClientDataController@tickets')->where('clientId', '[0-9]+');
 
-                Route::get('/agency/{agencyId}/clients', 'AgencyDataController@clients');
-                Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets');
-                Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices');
+                Route::get('/agency/{agencyId}/clients', 'AgencyDataController@clients')->where('agencyId', '[0-9]+');
+                Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets')->where('agencyId', '[0-9]+');
+                Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices')->where('agencyId', '[0-9]+');
 
                 Route::get('/ticketStatuses', 'TicketStatusController@statuses');
+            }
+        );
+
+        Route::group(
+            [
+                'middleware' => 'role.manager'
+            ],
+            function (): void {
+                Route::get('/users', 'UserController@users');
+                Route::post('/user', 'UserController@create');
+                Route::delete('/user/{userId}', 'UserController@remove')->where('userId', '[0-9]+');
+
+                Route::get('/agency/{agencyId}', 'AgencyController@agency')->where('agencyId', '[0-9]+');
+                Route::put('/agency', 'AgencyController@edit');
+
+                Route::post('/user/{userId}/block', 'UserController@block')->where('userId', '[0-9]+');
+                Route::post('/user/{userId}/unblock', 'UserController@unblock')->where('userId', '[0-9]+');
             }
         );
 
@@ -99,25 +116,8 @@ Route::group(
                 Route::post('/agency', 'AgencyController@create');
 
                 Route::get('/agency/roles', 'AgencyRoleController@roles');
-                Route::delete('/agency/{agencyId}', 'AgencyController@remove');
-                Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees');
-            }
-        );
-
-        Route::group(
-            [
-                'middleware' => 'role.manager'
-            ],
-            function (): void {
-                Route::get('/users', 'UserController@users');
-                Route::post('/user', 'UserController@create');
-                Route::delete('/user/{userId}', 'UserController@remove');
-
-                Route::get('/agency/{agencyId}', 'AgencyController@agency');
-                Route::put('/agency/{agencyId}', 'AgencyController@edit');
-
-                Route::post('/user/{userId}/block', 'UserController@block');
-                Route::post('/user/{userId}/unblock', 'UserController@unblock');
+                Route::delete('/agency/{agencyId}', 'AgencyController@remove')->where('agencyId', '[0-9]+');
+                Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees')->where('agencyId', '[0-9]+');
             }
         );
     }

@@ -21,7 +21,7 @@ class Ticket extends ApiRequest
     {
         return [
             'additional_information' => 'string|max:150',
-            'message' => 'string|max:255',
+            'message' => 'max:255',
             'description' => 'string|min:3|max:100',
             'client_id' => 'required|integer',
             'ticket_status_id' => 'required|integer',

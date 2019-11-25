@@ -49,7 +49,7 @@ class AuthController extends Controller
                 ->getResponse();
         }
 
-        $user = User::with('role')->find(auth()->id());
+        $user = User::with('role')->where('blocked_at', null)->findOrFail(auth()->id());
 
         return $this->apiResponse
             ->setMessage(__('messages.login.success'))

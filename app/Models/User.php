@@ -103,6 +103,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->role->id == AgencyRole::ADMINISTRATOR;
     }
 
+    public function isManager(): bool
+    {
+        return $this->role->id == AgencyRole::MANAGER || $this->role->id == AgencyRole::ADMINISTRATOR;
+    }
+
     /**
      * @return mixed
      */

@@ -20,14 +20,20 @@ class NotesTableSeeder extends Seeder
     public function run(): void
     {
         foreach (Ticket::all() as $ticket) {
-            factory(Note::class, 1)->create([
+            $agency = $ticket->agencies()->inRandomOrder()->first();
+
+            factory(Note::class)->create([
+                'author_id' => $agency->employees()->inRandomOrder()->firstOrFail(),
                 'content' => 'Utworzono zgłoszenie.',
                 'ticket_id' => $ticket->id
             ]);
 
-            factory(Note::class, random_int(1, 7))->create([
-                'ticket_id' => $ticket->id
-            ]);
+            for ($i = 0; $i < random_int(1, 7); $i++) {
+                factory(Note::class)->create([
+                    'author_id' => $agency->employees()->inRandomOrder()->firstOrFail(),
+                    'ticket_id' => $ticket->id
+                ]);
+            }
         }
     }
 }

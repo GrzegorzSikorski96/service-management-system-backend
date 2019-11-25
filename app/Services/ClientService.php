@@ -19,14 +19,18 @@ class ClientService extends BaseService
      */
     public function create(array $request): Client
     {
-        $ticket = new Client($request);
-        $ticket->save();
+        $client = new Client($request);
+        $client->save();
+
+        if (!array_key_exists('agency_id', $request)) {
+            $request['agency_id'] = auth()->user()->agency->id;
+        }
 
         $agency = $this->agencyService->agency($request['agency_id']);
-        $agency->clients()->attach($request['agency_id']);
+        $agency->clients()->attach($client);
         $agency->save();
 
-        return $ticket;
+        return $client;
     }
 
     /**
@@ -68,11 +72,19 @@ class ClientService extends BaseService
 
     /**
      * @param int $clientId
+     * @return bool
      */
-    public function remove(int $clientId): void
+    public function remove(int $clientId): bool
     {
-        $ticket = Client::findOrFail($clientId);
-        $ticket->delete();
+        if (auth()->user()->isAdmin()) {
+            $client = Client::findOrFail($clientId);
+        } else {
+            $client = auth()->user()->agency->clients()->findOrFail($clientId);
+        }
+
+        $client->delete();
+
+        return true;
     }
 
     /**
