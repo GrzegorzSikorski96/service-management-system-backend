@@ -23,6 +23,8 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('address');
+            $table->string('NIP');
+            $table->string('phone_number');
 
             $table->timestamps();
         });

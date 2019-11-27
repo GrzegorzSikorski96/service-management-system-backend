@@ -49,10 +49,10 @@ class UserService extends BaseService
     public function user(int $userId): User
     {
         if ($this->currentUser()->role->id == AgencyRole::ADMINISTRATOR) {
-            return User::with('notes.author', 'notes.ticket', 'role')->findOrFail($userId);
+            return User::with('role')->findOrFail($userId);
         }
 
-        return $this->currentUser()->agency->employees()->with('notes.author', 'notes.ticket')->findOrFail($userId);
+        return $this->currentUser()->agency->employees()->findOrFail($userId);
     }
 
     /**
@@ -69,12 +69,11 @@ class UserService extends BaseService
 
     /**
      * @param array $data
-     * @param int $userId
      * @return User
      */
-    public function edit(array $data, int $userId): User
+    public function edit(array $data): User
     {
-        $user = $this->user($userId);
+        $user = $this->user($data['id']);
 
         $user->name = $data['name'];
         $user->surname = $data['surname'];
@@ -83,8 +82,13 @@ class UserService extends BaseService
             $user->email = $data['email'];
         }
 
+        $user->phone_number = $data['phone_number'];
         $user->agency_role_id = $data['agency_role_id'];
-        $user->password = $this->hashPassword($data['password']);
+
+        if(array_key_exists('password', $data)){
+            $user->password = $this->hashPassword($data['password']);
+        }
+
         $user->save();
 
         return $user;

@@ -36,11 +36,11 @@ class TicketDataController extends Controller
      */
     public function notes(int $ticketId): JsonResponse
     {
-        $tickets = $this->ticketDataService->notes($ticketId);
+        $notes = $this->ticketDataService->notes($ticketId);
 
         return $this->apiResponse
             ->setData([
-                'tickets' => $tickets,
+                'notes' => $notes,
             ])
             ->setSuccessStatus()
             ->getResponse();

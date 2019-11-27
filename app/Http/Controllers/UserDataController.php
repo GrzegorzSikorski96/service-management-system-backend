@@ -36,7 +36,7 @@ class UserDataController extends Controller
      */
     public function notes(int $userId): JsonResponse
     {
-        $notes = $this->userDataService->clients($userId);
+        $notes = $this->userDataService->notes($userId);
 
         return $this->apiResponse
             ->setData([

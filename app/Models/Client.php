@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $phone_number
  * @property string $description
  * @property string $address
+ * @property string $NIP
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -43,6 +44,7 @@ class Client extends Model
         'email',
         'phone_number',
         'description',
+        'NIP',
         'address',
     ];
 

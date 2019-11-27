@@ -27,7 +27,6 @@ class Service extends ApiRequest
             'name' => 'required|string|min:3|max:100',
             'description' => 'required|string|min:3|max:100',
             'address' => 'required|string|max:255',
-            'owner_id' => 'required|integer',
         ];
     }
 }

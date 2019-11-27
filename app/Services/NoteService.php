@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Sms\Models\Note;
 
 /**
@@ -38,12 +37,13 @@ class NoteService
 
     /**
      * @param array $data
-     * @param Note $note
      * @return Note
      */
-    public function edit(array $data, Note $note): Note
+    public function edit(array $data): Note
     {
-        $note->fill($data);
+        $note = $this->note($data['id']);
+
+        $note->content = ($data['content']);
         $note->save();
 
         return $note;

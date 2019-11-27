@@ -40,7 +40,7 @@ class ClientService extends BaseService
     public function client(int $clientId): Client
     {
         if ($this->currentUser()->isAdmin()) {
-            return Client::with(['tickets.ticketStatus'])->findOrFail($clientId);
+            return Client::findOrFail($clientId);
         }
         return $this->currentUser()->agency->clients()->with('tickets.ticketStatus')->findOrFail($clientId);
     }

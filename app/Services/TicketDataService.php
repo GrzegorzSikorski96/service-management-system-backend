@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Sms\Models\Ticket;
 use Sms\Models\TicketStatus;
@@ -30,13 +31,13 @@ class TicketDataService
 
     /**
      * @param int $ticketId
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function notes(int $ticketId): Collection
+    public function notes(int $ticketId): LengthAwarePaginator
     {
         $ticket = $this->ticketService->ticket($ticketId);
 
-        return $ticket->notes;
+        return $ticket->notes()->with('author')->paginate(5);
     }
 
     /**

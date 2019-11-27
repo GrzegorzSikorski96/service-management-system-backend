@@ -9,16 +9,18 @@ use Sms\Models\Service;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-     * @param Faker $faker
-     * @return array
-     */
+/**
+ * @param Faker $faker
+ * @return array
+ */
     Service::class,
     function (Faker $faker) {
         return [
             'name' => $faker->company,
             'description' => $faker->text(100),
             'address' => $faker->address,
+            'phone_number' => $faker->phoneNumber,
+            'NIP' => random_int(100, 999) . '-' . random_int(100, 999) . '-' . random_int(1, 99) . '-' . random_int(1, 99),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];

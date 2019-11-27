@@ -21,10 +21,9 @@ class CheckNoteAuthor
      */
     public function handle($request, Closure $next)
     {
-        $note = Note::findOrFail($request->route('noteId'));
+        $note = Note::findOrFail($request->id);
 
-        if (Auth::id() == $note->author_id) {
-            $request['note'] = $note;
+        if (auth()->id() == $note->author_id) {
             return $next($request);
         }
 

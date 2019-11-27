@@ -69,12 +69,12 @@ class NoteController extends Controller
     }
 
     /**
-     * @param Note $data
+     * @param Request $data
      * @return JsonResponse
      */
-    public function edit(Note $data): JsonResponse
+    public function edit(Request $data): JsonResponse
     {
-        $edited = $this->noteService->edit($data->all(), $data['note']);
+        $edited = $this->noteService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.note.edit.success'))

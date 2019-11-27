@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 /**
@@ -30,11 +31,11 @@ class UserDataService
      * @param int $userId
      * @return Collection
      */
-    public function notes(int $userId): Collection
+    public function notes(int $userId): LengthAwarePaginator
     {
         $user = $this->userService->user($userId);
 
-        return $user->notes;
+        return $user->notes()->with('author', 'ticket')->paginate(5);
     }
 
     /**

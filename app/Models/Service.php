@@ -33,6 +33,8 @@ class Service extends Model
         'name',
         'address',
         'description',
+        'NIP',
+        'phone_number',
         'owner_id',
     ];
 

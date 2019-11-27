@@ -50,6 +50,22 @@ class AgencyDataController extends Controller
      * @param int $agencyId
      * @return JsonResponse
      */
+    public function statistics(int $agencyId): JsonResponse
+    {
+        $statistics = $this->agencyDataService->statistics($agencyId);
+
+        return $this->apiResponse
+            ->setData(
+                $statistics
+            )
+            ->setSuccessStatus()
+            ->getResponse();
+    }
+
+    /**
+     * @param int $agencyId
+     * @return JsonResponse
+     */
     public function devices(int $agencyId): JsonResponse
     {
         $devices = $this->agencyDataService->devices($agencyId);

@@ -11,6 +11,9 @@ Route::group(
     function (): void {
         Route::get('/', 'ExceptionController@getEmptyResponse');
         Route::get('/ticket/{token}/status', 'TicketDataController@status');
+        Route::get('/service', 'ServiceController@service');
+        Route::get('/agencies', 'AgencyController@agencies');
+        Route::get('/service/initialized', 'ServiceController@isInitialized');
     }
 );
 
@@ -19,7 +22,7 @@ Route::group(
         'middleware' => 'api',
         'prefix' => 'auth'
     ],
-    function ($router): void {
+    function (): void {
         Route::post('/register', 'Auth\RegisterController@register');
         Route::post('/login', 'AuthController@login');
         Route::post('/logout', 'AuthController@logout');
@@ -51,7 +54,7 @@ Route::group(
                 Route::get('/ticket/{ticketId}/notes', 'TicketDataController@notes')->where('ticketId', '[0-9]+');
 
                 Route::get('/note/{noteId}', 'NoteController@note')->where('noteId', '[0-9]+');
-                Route::put('/note/{noteId}', 'NoteController@edit')->where('noteId', '[0-9]+');
+                Route::put('/note', 'NoteController@edit');
                 Route::post('/note', 'NoteController@create');
                 Route::delete('/note/{noteId}', 'NoteController@remove')->where('noteId', '[0-9]+');
 
@@ -68,7 +71,6 @@ Route::group(
                 Route::post('/client', 'ClientController@create');
                 Route::post('/client/number', 'ClientController@addByNumber');
                 Route::delete('/client/{clientId}', 'ClientController@remove')->where('clientId', '[0-9]+');
-
 
                 Route::get('/clients', 'ClientController@clients');
                 Route::get('/devices', 'DeviceController@devices');
@@ -90,10 +92,13 @@ Route::group(
             ],
             function (): void {
                 Route::get('/users', 'UserController@users');
+                Route::put('/user', 'UserController@edit');
                 Route::post('/user', 'UserController@create');
                 Route::delete('/user/{userId}', 'UserController@remove')->where('userId', '[0-9]+');
 
                 Route::get('/agency/{agencyId}', 'AgencyController@agency')->where('agencyId', '[0-9]+');
+                Route::get('/agency/{agencyId}/statistics', 'AgencyDataController@statistics')->where('agencyId', '[0-9]+');
+                Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees')->where('agencyId', '[0-9]+');
                 Route::put('/agency', 'AgencyController@edit');
 
                 Route::post('/user/{userId}/block', 'UserController@block')->where('userId', '[0-9]+');
@@ -106,18 +111,14 @@ Route::group(
                 'middleware' => 'role.administrator',
             ],
             function (): void {
-                Route::get('/agencies', 'AgencyController@agencies');
 
-                Route::get('/service', 'ServiceController@service');
                 Route::put('/service', 'ServiceController@edit');
-                Route::post('/service', 'ServiceController@initialize');
-
+                Route::post('/service/initialize', 'ServiceController@initialize');
 
                 Route::post('/agency', 'AgencyController@create');
 
                 Route::get('/agency/roles', 'AgencyRoleController@roles');
                 Route::delete('/agency/{agencyId}', 'AgencyController@remove')->where('agencyId', '[0-9]+');
-                Route::get('/agency/{agencyId}/employees', 'AgencyDataController@employees')->where('agencyId', '[0-9]+');
             }
         );
     }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\UnauthorizedException;
+use Sms\Models\Agency;
 use Sms\Models\Service;
 
 /**
@@ -34,7 +36,15 @@ class ServiceService
      */
     public function service(): Service
     {
-        return Service::first();
+        return Service::firstOrFail();
+    }
+
+    public function isInitialized(): bool
+    {
+        $service = Service::all()->count();
+        $agencies = Agency::all()->count();
+
+        return $service && $agencies;
     }
 
     /**

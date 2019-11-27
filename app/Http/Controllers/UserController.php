@@ -78,12 +78,11 @@ class UserController extends Controller
 
     /**
      * @param User $data
-     * @param int $userId
      * @return JsonResponse
      */
-    public function edit(User $data, int $userId): JsonResponse
+    public function edit(User $data): JsonResponse
     {
-        $edited = $this->userService->edit($data->all(), $userId);
+        $edited = $this->userService->edit($data->all());
 
         return $this->apiResponse
             ->setMessage(__('messages.user.edit.success'))

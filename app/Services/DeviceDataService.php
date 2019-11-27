@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class DeviceDataService
@@ -28,12 +28,12 @@ class DeviceDataService
 
     /**
      * @param int $deviceId
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function tickets(int $deviceId): Collection
+    public function tickets(int $deviceId): LengthAwarePaginator
     {
         $device = $this->deviceService->device($deviceId);
 
-        return $device->tickets;
+        return $device->tickets()->with('ticketStatus')->paginate(5);
     }
 }

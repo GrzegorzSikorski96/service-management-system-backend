@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Models\TicketStatus;
 
 /**
  * Class AgencyDataService
@@ -39,6 +40,31 @@ class AgencyDataService
 
     /**
      * @param int $agencyId
+     * @return array
+     */
+    public function statistics(int $agencyId): array
+    {
+        $agency = $this->agencyService->agency($agencyId);
+
+        $ticketStatuses = [];
+
+        foreach (TicketStatus::all() as $status) {
+            $ticketStatuses[$status->name] = $agency->tickets()->where('ticket_status_id', $status->id)->count();
+        }
+
+        $statistics = [
+            'employees' => $agency->employees()->count(),
+            'clients' => $agency->clients()->count(),
+            'devices' => $agency->devices()->count(),
+            'tickets' => $agency->tickets()->count(),
+            'ticketStatuses' => $ticketStatuses
+        ];
+
+        return $statistics;
+    }
+
+    /**
+     * @param int $agencyId
      * @return Collection
      */
     public function devices(int $agencyId): Collection
@@ -67,6 +93,6 @@ class AgencyDataService
     {
         $agency = $this->agencyService->agency($agencyId);
 
-        return $agency->employees;
+        return $agency->employees()->with('role')->get();
     }
 }

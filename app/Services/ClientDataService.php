@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 /**
@@ -28,12 +29,12 @@ class ClientDataService
 
     /**
      * @param int $clientId
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function tickets(int $clientId): Collection
+    public function tickets(int $clientId): LengthAwarePaginator
     {
         $client = $this->clientService->client($clientId);
 
-        return $client->tickets;
+        return $client->tickets()->with('ticketStatus')->paginate(5);
     }
 }
