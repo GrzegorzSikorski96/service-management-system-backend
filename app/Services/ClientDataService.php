@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 /**
  * Class ClientDataService

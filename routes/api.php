@@ -111,7 +111,6 @@ Route::group(
                 'middleware' => 'role.administrator',
             ],
             function (): void {
-
                 Route::put('/service', 'ServiceController@edit');
                 Route::post('/service/initialize', 'ServiceController@initialize');
 

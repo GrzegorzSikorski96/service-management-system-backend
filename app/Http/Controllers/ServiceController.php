@@ -63,6 +63,9 @@ class ServiceController extends Controller
             ->getResponse();
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function isInitialized(): JsonResponse
     {
         $initialized = $this->serviceService->isInitialized();

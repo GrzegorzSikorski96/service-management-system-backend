@@ -43,7 +43,7 @@ class NoteService
     {
         $note = $this->note($data['id']);
 
-        $note->content = ($data['content']);
+        $note->content = $data['content'];
         $note->save();
 
         return $note;

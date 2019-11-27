@@ -9,10 +9,10 @@ use Sms\Models\Client;
 
 /** @var Factory $factory */
 $factory->define(
-/**
- * @param Faker $faker
- * @return array
- */
+    /**
+     * @param Faker $faker
+     * @return array
+     */
     Client::class,
     function (Faker $faker) {
         if (random_int(1, 15) % 5) {

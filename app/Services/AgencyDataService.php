@@ -52,15 +52,13 @@ class AgencyDataService
             $ticketStatuses[$status->name] = $agency->tickets()->where('ticket_status_id', $status->id)->count();
         }
 
-        $statistics = [
+        return [
             'employees' => $agency->employees()->count(),
             'clients' => $agency->clients()->count(),
             'devices' => $agency->devices()->count(),
             'tickets' => $agency->tickets()->count(),
             'ticketStatuses' => $ticketStatuses
         ];
-
-        return $statistics;
     }
 
     /**

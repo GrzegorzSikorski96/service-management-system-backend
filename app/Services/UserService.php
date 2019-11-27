@@ -85,7 +85,7 @@ class UserService extends BaseService
         $user->phone_number = $data['phone_number'];
         $user->agency_role_id = $data['agency_role_id'];
 
-        if(array_key_exists('password', $data)){
+        if (array_key_exists('password', $data)) {
             $user->password = $this->hashPassword($data['password']);
         }
 

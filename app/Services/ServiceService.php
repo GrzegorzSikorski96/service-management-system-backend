@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sms\Services;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\UnauthorizedException;
 use Sms\Models\Agency;
 use Sms\Models\Service;
