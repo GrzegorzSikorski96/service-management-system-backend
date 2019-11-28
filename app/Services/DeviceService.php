@@ -31,7 +31,6 @@ class DeviceService extends BaseService
         $agency->devices()->attach($device);
         $agency->save();
 
-        event(new Event(["devices"], 'update'));
         event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $device;
@@ -72,9 +71,6 @@ class DeviceService extends BaseService
         $device->fill($data);
         $device->save();
 
-        event(new Event(["device-$device->id"], 'update', ['device' => $device]));
-        event(new Event(["devices"], 'update'));
-
         return $device;
     }
 
@@ -85,10 +81,6 @@ class DeviceService extends BaseService
     {
         $device = Device::findOrFail($deviceId);
         $device->delete();
-
-        event(new Event(["devices"], 'update'));
-        event(new Event(["device-$device->id"], 'remove'));
-        event(new Event($this->agencyService->createAgenciesForEvents($device->agencies), 'statistics'));
     }
 
     /**

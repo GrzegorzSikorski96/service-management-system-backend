@@ -4,25 +4,40 @@ declare(strict_types=1);
 
 namespace Sms\Observers;
 
+use Sms\Events\Event;
 use Sms\Models\Ticket;
-use Sms\Services\NoteService;
+use Sms\Services\AgencyService;
 
 class TicketObserver
 {
-    protected $noteService;
+    protected $agencyService;
 
-    public function __construct(NoteService $noteService)
+    public function __construct(AgencyService $agencyService)
     {
-        $this->noteService = $noteService;
+        $this->agencyService = $agencyService;
     }
 
     public function created(Ticket $ticket): void
     {
-        if (auth()->id()) {
-            $this->noteService->create([
-                'content' => 'Utworzono zgłoszenie.',
-                'ticket_id' => $ticket->id
-            ]);
-        }
+        event(new Event($this->agencyService->createAgenciesForEvents($ticket->device->agencies), 'statistics'));
+        event(new Event(["tickets"], 'update'));
+        event(new Event(["client-$ticket->client_id"], 'tickets'));
+        event(new Event(["device-$ticket->device_id"], 'tickets'));
+    }
+
+    public function updated(Ticket $ticket): void
+    {
+        event(new Event(["ticket-$ticket->id"], 'update', ['ticket' => $ticket]));
+        event(new Event(["tickets"], 'update'));
+        event(new Event(["client-$ticket->client_id"], 'tickets'));
+        event(new Event(["device-$ticket->device_id"], 'tickets'));
+    }
+
+    public function deleted(Ticket $ticket): void
+    {
+        event(new Event(["tickets"], 'update'));
+        event(new Event(["client-$ticket->client_id"], 'tickets'));
+        event(new Event(["device-$ticket->device_id"], 'tickets'));
+        event(new Event($this->agencyService->createAgenciesForEvents($ticket->agencies), 'statistics'));
     }
 }

@@ -7,7 +7,6 @@ namespace Sms\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
-use Sms\Events\Event;
 use Sms\Models\AgencyRole;
 use Sms\Models\User;
 
@@ -25,9 +24,6 @@ class UserService extends BaseService
     {
         $user = new User($request);
         $user->save();
-
-        event(new Event(["users"], 'update'));
-        event(new Event(["agency-$user->agency_id"], 'statistics'));
 
         return $user;
     }
@@ -90,9 +86,6 @@ class UserService extends BaseService
 
         $user->save();
 
-        event(new Event(["user-$user->id"], 'update', ['user' => $user]));
-        event(new Event(["users"], 'update'));
-
         return $user;
     }
 
@@ -111,9 +104,6 @@ class UserService extends BaseService
         if (auth()->id() != $userId && auth()->user()->isManager()) {
             $user->delete();
 
-            event(new Event(["users"], 'update'));
-            event(new Event(["agency-$user->agency_id"], 'statistics'));
-
             return true;
         }
 
@@ -128,9 +118,6 @@ class UserService extends BaseService
         $user = User::findOrFail($userId);
         $user->blocked_at = Carbon::now();
         $user->save();
-
-        event(new Event(["user-$user->id"], 'update'));
-        event(new Event(["users"], 'update'));
     }
 
     /**
@@ -141,9 +128,6 @@ class UserService extends BaseService
         $user = User::findOrFail($userId);
         $user->blocked_at = null;
         $user->save();
-
-        event(new Event(["user-$user->id"], 'update'));
-        event(new Event(["users"], 'update'));
     }
 
     /**

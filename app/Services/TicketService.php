@@ -7,7 +7,6 @@ namespace Sms\Services;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Sms\Events\Event;
 use Sms\Models\Ticket;
 
 /**
@@ -26,10 +25,6 @@ class TicketService extends BaseService
         $ticket->token = Str::random(15);
         $ticket->save();
 
-        event(new Event(["tickets"], 'update'));
-        event(new Event($this->agencyService->createAgenciesForEvents($ticket->agencies), 'statistics'));
-        event(new Event(["client-$ticket->client_id"], 'tickets'));
-        event(new Event(["device-$ticket->device_id"], 'tickets'));
 
         return $ticket;
     }
@@ -74,11 +69,6 @@ class TicketService extends BaseService
 
         $ticket->save();
 
-        event(new Event(["ticket-$ticket->id"], 'update', ['ticket' => $ticket]));
-        event(new Event(["tickets"], 'update'));
-        event(new Event(["client-$ticket->client_id"], 'tickets'));
-        event(new Event(["device-$ticket->device_id"], 'tickets'));
-
         return $ticket;
     }
 
@@ -89,14 +79,7 @@ class TicketService extends BaseService
     public function remove(int $id): void
     {
         $ticket = Ticket::findOrFail($id);
-
-
         $ticket->delete();
-
-        event(new Event(["tickets"], 'update'));
-        event(new Event($this->agencyService->createAgenciesForEvents($ticket->agencies), 'statistics'));
-        event(new Event(["client-$ticket->client_id"], 'tickets'));
-        event(new Event(["device-$ticket->device_id"], 'tickets'));
     }
 
     /**
