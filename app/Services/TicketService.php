@@ -25,6 +25,13 @@ class TicketService extends BaseService
         $ticket->token = Str::random(15);
         $ticket->save();
 
+        if (!array_key_exists('agency_id', $request)) {
+            $request['agency_id'] = auth()->user()->agency->id;
+        }
+
+        $agency = $this->agencyService->agency($request['agency_id']);
+        $agency->tickets()->attach($ticket);
+        $agency->save();
 
         return $ticket;
     }
