@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Middleware;
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+namespace Sms\Http\Middleware;
+
 use Fideloper\Proxy\TrustProxies as Middleware;
+use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware
 {

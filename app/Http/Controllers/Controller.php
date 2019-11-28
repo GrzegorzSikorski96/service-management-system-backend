@@ -1,13 +1,44 @@
 <?php
 
-namespace App\Http\Controllers;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+namespace Sms\Http\Controllers;
+
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
+use Sms\Helpers\ApiResponse;
+use Tymon\JWTAuth\JWTGuard;
 
+/**
+ * Class Controller
+ * @package Sms\Http\Controllers
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @var ApiResponse
+     */
+    protected $apiResponse;
+
+    /**
+     * Controller constructor.
+     * @param ApiResponse $apiResponse
+     */
+    public function __construct(ApiResponse $apiResponse)
+    {
+        $this->apiResponse = $apiResponse;
+    }
+
+    /**
+     * @return JWTGuard
+     */
+    public function guard(): JWTGuard
+    {
+        return Auth::Guard('api');
+    }
 }

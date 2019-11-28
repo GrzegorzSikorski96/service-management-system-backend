@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Sms\Models;
+
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * Class Ticket
+ * @package Sms\Models
+ * @property int $id
+ * @property string $description
+ * @property string $additional_information
+ * @property string $message
+ * @property int $client_id
+ * @property int $ticket_status_id
+ * @property int $device_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property string $token
+ */
+class Ticket extends Model
+{
+    use SoftDeletes;
+    use SoftCascadeTrait;
+
+    protected $softCascade = ['notes'];
+
+    /**
+     * @var string
+     */
+    protected $table = 'tickets';
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'description',
+        'additional_information',
+        'message',
+        'client_id',
+        'ticket_status_id',
+        'device_id',
+    ];
+
+    /**
+     * @return HasMany
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function ticketStatus(): BelongsTo
+    {
+        return $this->belongsTo(TicketStatus::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function device(): BelongsTo
+    {
+        return $this->belongsTo(Device::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function agencies(): BelongsToMany
+    {
+        return $this->belongsToMany(Agency::class, 'agency_tickets');
+    }
+}

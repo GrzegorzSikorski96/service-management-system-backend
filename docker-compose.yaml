@@ -1,0 +1,41 @@
+version: "3.1"
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    container_name: sms-db-mysql
+    working_dir: /application
+    volumes:
+      - .:/application
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+
+  webserver:
+    image: nginx:alpine
+    container_name: sms-db-webserver
+    working_dir: /application
+    volumes:
+      - .:/application
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "777:80"
+
+  php-fpm:
+    build:
+      context: ./.docker/php-fpm
+      args:
+        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
+        - XDEBUG_HOST=${XDEBUG_HOST}
+        - XDEBUG_PORT=${XDEBUG_PORT}
+        - XDEBUG_AUTOSTART=${XDEBUG_AUTOSTART}
+    container_name: sms-db-php-fpm
+    working_dir: /application
+    volumes:
+      - .:/application
+      - ./.docker/conf/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini

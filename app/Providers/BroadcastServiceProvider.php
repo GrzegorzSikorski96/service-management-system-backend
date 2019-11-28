@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Providers;
+declare(strict_types=1);
 
-use Illuminate\Support\ServiceProvider;
+namespace Sms\Providers;
+
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\ServiceProvider;
 
 class BroadcastServiceProvider extends ServiceProvider
 {

@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Sms\Http\Middleware\Roles;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
+use Sms\Models\AgencyRole;
+
+class Administrator
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param Request $request
+     * @param Closure $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        $available = [
+            AgencyRole::ADMINISTRATOR,
+        ];
+
+        if (in_array(Auth::user()->role->id, $available)) {
+            return $next($request);
+        }
+
+        throw new UnauthorizedException();
+    }
+}
