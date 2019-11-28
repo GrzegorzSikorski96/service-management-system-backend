@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\Event;
 use Sms\Models\Device;
 
 /**
@@ -29,6 +30,9 @@ class DeviceService extends BaseService
         $agency = $this->agencyService->agency($request['agency_id']);
         $agency->devices()->attach($device);
         $agency->save();
+
+        event(new Event(["devices"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $device;
     }
@@ -68,6 +72,9 @@ class DeviceService extends BaseService
         $device->fill($data);
         $device->save();
 
+        event(new Event(["device-$device->id"], 'update', ['device' => $device]));
+        event(new Event(["devices"], 'update'));
+
         return $device;
     }
 
@@ -78,6 +85,10 @@ class DeviceService extends BaseService
     {
         $device = Device::findOrFail($deviceId);
         $device->delete();
+
+        event(new Event(["devices"], 'update'));
+        event(new Event(["device-$device->id"], 'remove'));
+        event(new Event($this->agencyService->createAgenciesForEvents($device->agencies), 'statistics'));
     }
 
     /**
@@ -97,6 +108,9 @@ class DeviceService extends BaseService
         }
 
         $agency->save();
+
+        event(new Event(["devices"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $device;
     }

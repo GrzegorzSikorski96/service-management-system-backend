@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\Event;
 use Sms\Models\Agency;
 use Sms\Models\Service;
 
@@ -23,6 +24,8 @@ class AgencyService
         $agency = new Agency($request);
         $agency->service_id = Service::firstOrFail()->id;
         $agency->save();
+
+        event(new Event(["agencies"], 'update'));
 
         return $agency;
     }
@@ -54,6 +57,9 @@ class AgencyService
         $agency->fill($request);
         $agency->save();
 
+        event(new Event(["agency-$agency->id"], 'update', ['agency' => $agency]));
+        event(new Event(["agencies"], 'update'));
+
         return $agency;
     }
 
@@ -64,5 +70,23 @@ class AgencyService
     {
         $agency = Agency::findOrFail($agencyId);
         $agency->delete();
+
+        event(new Event(["agency-$agency->id"], 'remove'));
+        event(new Event(["agencies"], 'update'));
+    }
+
+    /**
+     * @param array $agencies
+     * @return array
+     */
+    public function createAgenciesForEvents(array $agencies)
+    {
+        $agencyStrings = [];
+
+        foreach ($agencies as $agency) {
+            $agencyStrings[] = "agency-$agency->id";
+        }
+
+        return $agencyStrings;
     }
 }

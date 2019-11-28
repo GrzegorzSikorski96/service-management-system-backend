@@ -29,7 +29,7 @@ class UserDataService
 
     /**
      * @param int $userId
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function notes(int $userId): LengthAwarePaginator
     {

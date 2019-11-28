@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\Event;
 use Sms\Models\Client;
 
 /**
@@ -29,6 +30,9 @@ class ClientService extends BaseService
         $agency = $this->agencyService->agency($request['agency_id']);
         $agency->clients()->attach($client);
         $agency->save();
+
+        event(new Event(["clients"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $client;
     }
@@ -67,6 +71,9 @@ class ClientService extends BaseService
         $client->fill($data);
         $client->save();
 
+        event(new Event(["client-$client->id"], 'update', ['client' => $client]));
+        event(new Event(["clients"], 'update'));
+
         return $client;
     }
 
@@ -83,6 +90,10 @@ class ClientService extends BaseService
         }
 
         $client->delete();
+
+        event(new Event(["clients"], 'update'));
+        event(new Event(["client-$client->id"], 'remove'));
+        event(new Event($this->agencyService->createAgenciesForEvents($client->agencies), 'statistics'));
 
         return true;
     }
@@ -104,6 +115,9 @@ class ClientService extends BaseService
         }
 
         $agency->save();
+
+        event(new Event(["clients"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $client;
     }
