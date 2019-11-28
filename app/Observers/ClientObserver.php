@@ -30,6 +30,7 @@ class ClientObserver
     {
         event(new Event(["client-$client->id"], 'update', ['client' => $client]));
         event(new Event(["clients"], 'update'));
+        event(new Event(["tickets"], 'update'));
     }
 
     public function deleted(Client $client): void

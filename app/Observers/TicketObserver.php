@@ -36,6 +36,7 @@ class TicketObserver
     public function deleted(Ticket $ticket): void
     {
         event(new Event(["tickets"], 'update'));
+        event(new Event(["ticket-$ticket->id"], 'remove'));
         event(new Event(["client-$ticket->client_id"], 'tickets'));
         event(new Event(["device-$ticket->device_id"], 'tickets'));
         event(new Event($this->agencyService->createAgenciesForEvents($ticket->agencies), 'statistics'));

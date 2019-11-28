@@ -26,6 +26,7 @@ class DeviceObserver
     {
         event(new Event(["device-$device->id"], 'update', ['device' => $device]));
         event(new Event(["devices"], 'update'));
+        event(new Event(["tickets"], 'update'));
     }
 
     public function deleted(Device $device): void
