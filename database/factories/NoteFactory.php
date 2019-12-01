@@ -10,10 +10,6 @@ use Sms\Models\Note;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-     * @param Faker $faker
-     * @return array
-     */
     Note::class,
     function (Faker $faker) {
         $agency = Agency::inRandomOrder()->first();

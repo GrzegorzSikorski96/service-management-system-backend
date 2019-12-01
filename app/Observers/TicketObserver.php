@@ -8,15 +8,29 @@ use Sms\Events\Event;
 use Sms\Models\Ticket;
 use Sms\Services\AgencyService;
 
+/**
+ * Class TicketObserver
+ * @package Sms\Observers
+ */
 class TicketObserver
 {
+    /**
+     * @var AgencyService
+     */
     protected $agencyService;
 
+    /**
+     * TicketObserver constructor.
+     * @param AgencyService $agencyService
+     */
     public function __construct(AgencyService $agencyService)
     {
         $this->agencyService = $agencyService;
     }
 
+    /**
+     * @param Ticket $ticket
+     */
     public function created(Ticket $ticket): void
     {
         event(new Event($this->agencyService->createAgenciesForEvents($ticket->device->agencies), 'statistics'));
@@ -25,6 +39,9 @@ class TicketObserver
         event(new Event(["device-$ticket->device_id"], 'tickets'));
     }
 
+    /**
+     * @param Ticket $ticket
+     */
     public function updated(Ticket $ticket): void
     {
         event(new Event(["ticket-$ticket->id"], 'update', ['ticket' => $ticket]));
@@ -33,6 +50,9 @@ class TicketObserver
         event(new Event(["device-$ticket->device_id"], 'tickets'));
     }
 
+    /**
+     * @param Ticket $ticket
+     */
     public function deleted(Ticket $ticket): void
     {
         event(new Event(["tickets"], 'update'));

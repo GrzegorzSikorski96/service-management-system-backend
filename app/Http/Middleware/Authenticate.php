@@ -6,7 +6,6 @@ namespace Sms\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\UnauthorizedException;
 use Tymon\JWTAuth\Http\Middleware\Authenticate as Middleware;
 

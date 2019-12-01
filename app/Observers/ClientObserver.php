@@ -8,8 +8,15 @@ use Sms\Events\Event;
 use Sms\Models\Client;
 use Sms\Services\AgencyService;
 
+/**
+ * Class ClientObserver
+ * @package Sms\Observers
+ */
 class ClientObserver
 {
+    /**
+     * @var AgencyService
+     */
     protected $agencyService;
 
     /**
@@ -21,11 +28,17 @@ class ClientObserver
         $this->agencyService = $agencyService;
     }
 
+    /**
+     * @param Client $client
+     */
     public function created(Client $client): void
     {
         event(new Event(["clients"], 'update'));
     }
 
+    /**
+     * @param Client $client
+     */
     public function updated(Client $client): void
     {
         event(new Event(["client-$client->id"], 'update', ['client' => $client]));
@@ -33,6 +46,9 @@ class ClientObserver
         event(new Event(["tickets"], 'update'));
     }
 
+    /**
+     * @param Client $client
+     */
     public function deleted(Client $client): void
     {
         event(new Event(["clients"], 'update'));

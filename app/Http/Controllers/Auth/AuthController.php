@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sms\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Sms\Helpers\ApiResponse;
 use Sms\Http\Requests\Login;
 use Sms\Models\User;

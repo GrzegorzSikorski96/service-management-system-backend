@@ -19,14 +19,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $address
  * @property string $phone_number
+ * @property int $service_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Carbon $deleted_at
  */
 class Agency extends Model
 {
     use SoftDeletes;
     use SoftCascadeTrait;
 
+    /**
+     * @var array
+     */
     protected $softCascade = ['tickets', 'clients', 'devices', ];
 
     /**

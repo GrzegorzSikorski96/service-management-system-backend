@@ -26,7 +26,7 @@ class TicketStatusesTableSeeder extends Seeder
         ];
 
         $colors = [
-            TicketStatus::PENDING => 'pink',
+            TicketStatus::PENDING => 'purple',
             TicketStatus::DURING => 'warning',
             TicketStatus::READY => 'info',
             TicketStatus::ENDED => 'success',

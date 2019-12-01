@@ -23,12 +23,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $NIP
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Carbon $deleted_at
  */
 class Client extends Model
 {
     use SoftDeletes;
     use SoftCascadeTrait;
 
+    /**
+     * @var array
+     */
     protected $softCascade = ['tickets'];
 
     /**

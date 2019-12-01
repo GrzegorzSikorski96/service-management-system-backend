@@ -9,10 +9,6 @@ use Sms\Models\Service;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-     * @param Faker $faker
-     * @return array
-     */
     Service::class,
     function (Faker $faker) {
         return [

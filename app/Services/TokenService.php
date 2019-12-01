@@ -8,6 +8,10 @@ use Sms\Models\User;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
 
+/**
+ * Class TokenService
+ * @package Sms\Services
+ */
 class TokenService
 {
     /**

@@ -11,10 +11,6 @@ use Sms\Models\User;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-     * @param Faker $faker
-     * @return array
-     */
     User::class,
     function (Faker $faker) {
         return [

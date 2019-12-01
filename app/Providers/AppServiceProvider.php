@@ -18,6 +18,10 @@ use Sms\Observers\NoteObserver;
 use Sms\Observers\TicketObserver;
 use Sms\Observers\UserObserver;
 
+/**
+ * Class AppServiceProvider
+ * @package Sms\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
