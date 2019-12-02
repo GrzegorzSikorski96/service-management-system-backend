@@ -16,6 +16,8 @@ $factory->define(
     function (Faker $faker) {
         $agency = Agency::inRandomOrder()->first();
 
+        Ticket::flushEventListeners();
+
         return [
             'description' => $faker->text(80),
             'additional_information' => $faker->text(30),

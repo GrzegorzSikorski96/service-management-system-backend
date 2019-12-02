@@ -13,7 +13,7 @@ use Sms\Services\AgencyService;
  * Class AgencyController
  * @package Sms\Http\Controllers
  */
-class AgencyController extends Controller
+class AgencyController extends Controller implements \CreateInterface
 {
     /**
      * @var AgencyService

@@ -35,7 +35,7 @@ class UserDataService
     {
         $user = $this->userService->user($userId);
 
-        return $user->notes()->with('author', 'ticket')->paginate(5);
+        return $user->notes()->with('author', 'ticket')->orderByDesc('created_at')->paginate(5);
     }
 
     /**

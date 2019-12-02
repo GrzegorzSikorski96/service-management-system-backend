@@ -34,6 +34,6 @@ class ClientDataService
     {
         $client = $this->clientService->client($clientId);
 
-        return $client->tickets()->with('ticketStatus')->paginate(5);
+        return $client->tickets()->with('ticketStatus')->orderByDesc('created_at')->paginate(5);
     }
 }

@@ -28,6 +28,8 @@ class CreateNotesTable extends Migration
             $table->unsignedBigInteger('ticket_id');
             $table->foreign('ticket_id')->references('id')->on('tickets');
 
+            $table->boolean('editable')->default(true);
+
             $table->timestamps();
             $table->softDeletes();
         });
