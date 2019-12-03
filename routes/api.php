@@ -14,6 +14,8 @@ Route::group(
         Route::get('/service', 'ServiceController@service');
         Route::get('/agencies', 'AgencyController@agencies');
         Route::get('/service/initialized', 'ServiceController@isInitialized');
+
+        Route::get('/pdf/{id}', 'PdfController@getPdf');
     }
 );
 
