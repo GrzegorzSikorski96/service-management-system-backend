@@ -82,11 +82,12 @@ Route::group(
                 Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets')->where('agencyId', '[0-9]+');
                 Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices')->where('agencyId', '[0-9]+');
 
-                Route::get('/ticketStatuses', 'TicketStatusController@statuses');
+                Route::put('/ticket/{ticketId}/status/{statusId}', 'TicketStatusController@changeTicketStatus');
+                Route::get('/ticket/{ticketId}/statuses', 'TicketStatusController@availableTicketStatuses')->where('ticketId', '[0-9]+');
 
-                Route::get('/pdf/{ticketId}/returning', 'PdfController@returning');
-                Route::get('/pdf/{ticketId}/resignation', 'PdfController@resignation');
-                Route::get('/pdf/{ticketId}/creation', 'PdfController@creation');
+                Route::get('/document/{ticketId}/returning', 'PdfController@returning');
+                Route::get('/document/{ticketId}/resignation', 'PdfController@resignation');
+                Route::get('/document/{ticketId}/creation', 'PdfController@creation');
             }
         );
 

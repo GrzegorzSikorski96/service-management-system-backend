@@ -26,7 +26,7 @@ class PdfController extends Controller
 
         $pdf = PDF::loadView('pdf.layouts.creation', compact('ticket', 'user', 'service'));
 
-        return $pdf->download('creation-' . $ticket->token . '.pdf');
+        return response()->file($pdf->download('creation-' . $ticket->token . '.pdf'));
     }
 
     /**

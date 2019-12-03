@@ -44,4 +44,37 @@ class TicketStatusController extends Controller
             ->setSuccessStatus()
             ->getResponse();
     }
+
+    /**
+     * @param int $ticketId
+     * @return JsonResponse
+     */
+    public function availableTicketStatuses(int $ticketId): JsonResponse
+    {
+        $statuses = $this->ticketStatusService->availableTicketStatuses($ticketId);
+
+        return $this->apiResponse
+            ->setData([
+                'ticket_statuses' => $statuses,
+            ])
+            ->setSuccessStatus()
+            ->getResponse();
+    }
+
+    /**
+     * @param int $ticketId
+     * @param int $statusId
+     * @return JsonResponse
+     */
+    public function changeTicketStatus(int $ticketId, int $statusId): JsonResponse
+    {
+        $ticket = $this->ticketStatusService->changeTicketStatus($ticketId, $statusId);
+
+        return $this->apiResponse
+            ->setData([
+                'ticket' => $ticket,
+            ])
+            ->setSuccessStatus()
+            ->getResponse();
+    }
 }
