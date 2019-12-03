@@ -14,8 +14,6 @@ Route::group(
         Route::get('/service', 'ServiceController@service');
         Route::get('/agencies', 'AgencyController@agencies');
         Route::get('/service/initialized', 'ServiceController@isInitialized');
-
-        Route::get('/pdf/{id}', 'PdfController@getPdf');
     }
 );
 
@@ -85,6 +83,10 @@ Route::group(
                 Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices')->where('agencyId', '[0-9]+');
 
                 Route::get('/ticketStatuses', 'TicketStatusController@statuses');
+
+                Route::get('/pdf/{ticketId}/returning', 'PdfController@returning');
+                Route::get('/pdf/{ticketId}/resignation', 'PdfController@resignation');
+                Route::get('/pdf/{ticketId}/creation', 'PdfController@creation');
             }
         );
 

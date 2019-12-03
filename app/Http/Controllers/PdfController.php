@@ -4,16 +4,58 @@ declare(strict_types=1);
 
 namespace Sms\Http\Controllers;
 
-use Barryvdh\DomPDF\Facade as PDF;
+use niklasravnsborg\LaravelPdf\Facades\Pdf as PDF;
+use Sms\Models\Service;
 use Sms\Models\Ticket;
 
+/**
+ * Class PdfController
+ * @package Sms\Http\Controllers
+ */
 class PdfController extends Controller
 {
-    public function getPdf($id)
+    /**
+     * @param $ticketId
+     * @return mixed
+     */
+    public function creation($ticketId)
     {
-        $ticket = Ticket::find($id);
-        $pdf = PDF::loadView('pdf', compact('ticket'));
+        $ticket = Ticket::with('client', 'device')->findOrFail($ticketId);
+        $service = Service::firstOrFail();
+        $user = auth()->user();
 
-        return $pdf->download('ticket.pdf');
+        $pdf = PDF::loadView('pdf.layouts.creation', compact('ticket', 'user', 'service'));
+
+        return $pdf->download('creation-' . $ticket->token . '.pdf');
+    }
+
+    /**
+     * @param $ticketId
+     * @return mixed
+     */
+    public function returning($ticketId)
+    {
+        $ticket = Ticket::with('client', 'device')->findOrFail($ticketId);
+        $service = Service::firstOrFail();
+        $user = auth()->user();
+
+        $pdf = PDF::loadView('pdf.layouts.returning', compact('ticket', 'user', 'service'));
+
+        return $pdf->download('returning-' . $ticket->token . '.pdf');
+    }
+
+    /**
+     * @param $ticketId
+     * @return mixed
+     */
+    public function resignation($ticketId)
+    {
+        $ticket = Ticket::with('client', 'device')->findOrFail($ticketId);
+        $service = Service::firstOrFail();
+        $user = auth()->user();
+
+        $pdf = PDF::loadView('pdf.layouts.resignation', compact('ticket', 'user', 'service'));
+
+        return $pdf->download('resignation-' . $ticket->token . '.pdf');
     }
 }
