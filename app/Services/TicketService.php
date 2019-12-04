@@ -46,7 +46,7 @@ class TicketService extends BaseService
         if ($this->currentUser()->isAdmin()) {
             return Ticket::with('client', 'device', 'ticketStatus')->findOrFail($id);
         }
-        return $this->currentUser()->agency->tickets()->with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
+        return $this->currentUser()->agency->tickets()->with('client', 'device', 'ticketStatus')->findOrFail($id);
     }
 
     /**
