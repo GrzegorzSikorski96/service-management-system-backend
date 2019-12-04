@@ -43,4 +43,5 @@ return [
 
     'exceptions.unauthorized' => 'Brak uprawnień.',
     'exceptions.not_found' => 'Strony nie znaleziono.',
+    'exceptions.forbidden' => 'Brak dostępu.',
 ];

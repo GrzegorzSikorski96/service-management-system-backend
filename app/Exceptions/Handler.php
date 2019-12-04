@@ -13,8 +13,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\UnauthorizedException;
 use Sms\Helpers\ApiResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 /**
  * Class Handler
@@ -78,6 +82,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof UnauthorizedHttpException) {
+            $message = __('messages.exceptions.unauthorized');
+
+            $preException = $exception->getPrevious();
+            if ($preException instanceof TokenExpiredException) {
+                $message = 'TOKEN_EXPIRED';
+            } elseif ($preException instanceof TokenInvalidException) {
+                $message = 'TOKEN_INVALID';
+            } elseif ($preException instanceof TokenBlacklistedException) {
+                $message = 'TOKEN_BLACKLISTED';
+            }
+
+            return $this->apiResponse
+                ->setMessage($message)
+                ->setFailureStatus(401)
+                ->getResponse();
+        }
+
+        if ($exception instanceof AccessDeniedHttpException) {
+            return $this->apiResponse
+                ->setMessage(__('messages.exceptions.not_found'))
+                ->setFailureStatus(403)
+                ->getResponse();
+        }
+
+        if ($exception instanceof TokenBlacklistedException) {
+            return $this->apiResponse
+                ->setMessage('TOKEN_BLACKLISTED')
+                ->setFailureStatus(401)
+                ->getResponse();
+        }
+
         if ($exception instanceof ModelNotFoundException) {
             return $this->apiResponse
                 ->setMessage(__('messages.exceptions.not_found'))

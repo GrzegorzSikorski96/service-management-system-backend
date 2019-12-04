@@ -12,7 +12,7 @@ use Tymon\JWTAuth\JWTAuth;
  * Class TokenService
  * @package Sms\Services
  */
-class TokenService
+class TokenService extends JWTAuth
 {
     /**
      * @param User $user
@@ -21,6 +21,11 @@ class TokenService
     public function generateToken(User $user): string
     {
         return JWTAuth::fromUser($user);
+    }
+
+    public function checkToken()
+    {
+        return $this->checkOrFail();
     }
 
     /**
