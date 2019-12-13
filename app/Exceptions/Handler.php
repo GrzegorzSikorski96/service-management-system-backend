@@ -94,6 +94,10 @@ class Handler extends ExceptionHandler
                 $message = 'TOKEN_BLACKLISTED';
             }
 
+            if ($exception instanceof TokenExpiredException) {
+                $message = 'TOKEN_EXPIRED';
+            }
+
             return $this->apiResponse
                 ->setMessage($message)
                 ->setFailureStatus(401)
