@@ -24,7 +24,6 @@ class Ticket extends ApiRequest
             'message' => 'max:255',
             'description' => 'string|min:3|max:100',
             'client_id' => 'required|integer',
-            'ticket_status_id' => 'required|integer',
             'device_id' => 'required|integer',
         ];
     }

@@ -8,6 +8,7 @@ use Behat\Gherkin\Node\TableNode;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert;
 
 /**
@@ -76,10 +77,19 @@ trait Requesting
      * @Given request data is:
      * @param TableNode $table
      * @return void
+     * @throws Exception
      */
     public function requestDataIs(TableNode $table): void
     {
         foreach ($table->getHash() as $row) {
+            if (preg_match('/(generate)/', $row['value'])) {
+                $row['value'] = Str::random(15);
+            }
+
+            if (preg_match('/(id)/', $row['key'])) {
+                $row['value'] = intval($row['value']);
+            }
+
             $this->request[$row['key']] = $row['value'];
         }
     }
@@ -112,14 +122,17 @@ trait Requesting
     }
 
     /**
-     * @Given authenticated by email :email and password :password
-     * @param string $email
-     * @param string $password
+     * @Given response data field should be in :key array:
+     * @param TableNode $table
+     * @param string $key
      */
-    public function authenticatedByEmailAndPassword(string $email, string $password): void
+    public function responseDataFieldShouldBe(TableNode $table, string $key): void
     {
-        $jwtToken = auth()->attempt(['email' => $email, 'password' => $password]);
+        $convertedTable = [];
 
-        $this->request->headers->add(['Authorization' => 'Bearer ' . $jwtToken]);
+        foreach ($table->getHash() as $row) {
+            $convertedTable[$row['key']] = $row['value'];
+            Assert::assertEquals($row['value'], $this->getResponseContent()['data'][$key][$row['key']]);
+        }
     }
 }

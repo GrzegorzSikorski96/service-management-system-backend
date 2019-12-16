@@ -90,7 +90,7 @@ class TicketController extends Controller
         return $this->apiResponse
             ->setMessage(__('messages.ticket.edit.success'))
             ->setData([
-                'client' => $edited,
+                'ticket' => $edited,
             ])
             ->setSuccessStatus()
             ->getResponse();

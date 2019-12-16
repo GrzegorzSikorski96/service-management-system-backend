@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Sms\Models\TicketStatus;
 
 /**
  * Class CreateTicketsTable
@@ -28,7 +29,7 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
-            $table->unsignedBigInteger('ticket_status_id');
+            $table->unsignedBigInteger('ticket_status_id')->default(TicketStatus::PENDING);
             $table->foreign('ticket_status_id')->references('id')->on('ticket_statuses')->onDelete('cascade');
 
             $table->unsignedBigInteger('device_id');

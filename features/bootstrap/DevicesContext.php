@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace BehatTests;
 
 use Behat\Behat\Context\Context;
+use BehatTests\helpers\Devices;
 use BehatTests\helpers\Requesting;
 use BehatTests\helpers\Users;
 
 /**
- * Class AuthenticationContext
+ * Class DevicesContext
  * @package BehatTests
  */
-class AuthenticationContext implements Context
+class DevicesContext implements Context
 {
-    use Users, Requesting;
+    use Requesting, Users, Devices;
 }

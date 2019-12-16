@@ -28,9 +28,9 @@ class ClientDataService
 
     /**
      * @param int $clientId
-     * @return LengthAwarePaginator
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|LengthAwarePaginator
      */
-    public function tickets(int $clientId): LengthAwarePaginator
+    public function tickets(int $clientId)
     {
         $client = $this->clientService->client($clientId);
 

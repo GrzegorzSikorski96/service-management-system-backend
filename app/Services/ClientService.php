@@ -98,6 +98,10 @@ class ClientService extends BaseService
     {
         $client = Client::where('NIP', $data['number'])->firstOrFail();
 
+        if (!array_key_exists('agency_id', $data)) {
+            $data['agency_id'] = auth()->user()->agency->id;
+        }
+
         $agency = $this->agencyService->agency($data['agency_id']);
         $agency->clients()->syncWithoutDetaching($client);
         $agency->tickets()->syncWithoutDetaching($client->tickets);

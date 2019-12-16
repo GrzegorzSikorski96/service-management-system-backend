@@ -91,6 +91,10 @@ class DeviceService extends BaseService
     {
         $device = Device::where('serial_number', $data['serial_number'])->firstOrFail();
 
+        if (!array_key_exists('agency_id', $data)) {
+            $data['agency_id'] = auth()->user()->agency->id;
+        }
+
         $agency = $this->agencyService->agency($data['agency_id']);
         $agency->devices()->syncWithoutDetaching($device);
         $agency->tickets()->syncWithoutDetaching($device->tickets);

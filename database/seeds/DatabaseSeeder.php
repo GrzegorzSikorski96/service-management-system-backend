@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AgencyRolesTableSeeder::class);
         $this->call(AdminAccountSeeder::class);
 
-        if (app()->environment('local')) {
+        if (app()->environment('local') || app()->environment('testing')) {
             $this->call(ServicesTableSeeder::class);
             $this->call(AgenciesTableSeeder::class);
             $this->call(AgencyDevicesTableSeeder::class);
