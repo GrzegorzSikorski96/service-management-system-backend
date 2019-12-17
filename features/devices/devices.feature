@@ -8,17 +8,19 @@ Feature: Devices management
     And user with email 'test@example.com' and password 'secret' exists
     And authenticated by email 'test@example.com' and password 'secret'
     And user role is 'serwisant'
+    And user agency id 1
     When request is sent
     Then the response status code should be 200
     And response success field should be true
 
   @success
-  Scenario: Success: Get device details
+  Scenario: Success: Get available device details
     Given I send request to '/api/device/1' using 'GET' method
     And user with email 'test@example.com' and password 'secret' exists
     And authenticated by email 'test@example.com' and password 'secret'
     And device with id 1 exist
     And user role is 'serwisant'
+    And user agency id 1
     When request is sent
     Then the response status code should be 200
     And response success field should be true

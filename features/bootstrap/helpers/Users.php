@@ -7,6 +7,7 @@ namespace BehatTests\helpers;
 use Carbon\Carbon;
 use Exception;
 use Sms\Creators\UserCreator;
+use Sms\Models\Agency;
 use Sms\Models\AgencyRole;
 use Sms\Models\User;
 
@@ -89,5 +90,16 @@ trait Users
         if (auth()->check()) {
             auth()->logout();
         }
+    }
+
+    /**
+     * @Given user agency id :id
+     * @param int $id
+     */
+    public function userAgencyId(int $id): void
+    {
+        $agency = Agency::findOrFail($id);
+
+        auth()->user()->agency_id = $agency->id;
     }
 }

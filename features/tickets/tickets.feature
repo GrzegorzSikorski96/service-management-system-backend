@@ -82,7 +82,7 @@ Feature: Tickets management
       | ticket_status_id       | 3                             |
 
   @fail
-  Scenario: Fail: Get non existing device details
+  Scenario: Fail: Get non existing ticket details
     Given I send request to '/api/ticket/999999999' using 'GET' method
     And user with email 'test@example.com' and password 'secret' exists
     And authenticated by email 'test@example.com' and password 'secret'

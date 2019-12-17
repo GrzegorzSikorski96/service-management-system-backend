@@ -17,12 +17,13 @@ trait Devices
     /**
      * @Given device with id :deviceId exist
      * @param int $deviceId
+     * @param int $agencyId
      * @throws BindingResolutionException
      */
-    public function deviceWithIdExist(int $deviceId): void
+    public function deviceWithIdExist(int $deviceId, int $agencyId = 1): void
     {
         $creator = app()->make(DeviceCreator::class);
-        $creator->createOrReplaceDevice($deviceId);
+        $creator->createOrReplaceDevice($deviceId, $agencyId);
     }
 
     /**

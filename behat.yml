@@ -31,3 +31,8 @@ default:
         - "%paths.base%/features/tickets"
       contexts:
         - BehatTests\TicketsContext
+    agencies:
+      paths:
+        - "%paths.base%/features/agencies"
+      contexts:
+        - BehatTests\AgenciesContext
