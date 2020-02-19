@@ -22,12 +22,6 @@ class NotesTableSeeder extends Seeder
         foreach (Ticket::all() as $ticket) {
             $agency = $ticket->agencies()->inRandomOrder()->first();
 
-            factory(Note::class)->create([
-                'author_id' => $agency->employees()->inRandomOrder()->firstOrFail(),
-                'content' => 'Utworzono zgłoszenie.',
-                'ticket_id' => $ticket->id
-            ]);
-
             for ($i = 0; $i < random_int(1, 7); $i++) {
                 factory(Note::class)->create([
                     'author_id' => $agency->employees()->inRandomOrder()->firstOrFail(),

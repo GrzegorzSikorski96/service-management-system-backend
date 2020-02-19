@@ -29,13 +29,13 @@ class UserDataService
 
     /**
      * @param int $userId
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function notes(int $userId): LengthAwarePaginator
     {
         $user = $this->userService->user($userId);
 
-        return $user->notes()->with('author', 'ticket')->paginate(5);
+        return $user->notes()->with('author', 'ticket')->orderByDesc('created_at')->paginate(5);
     }
 
     /**

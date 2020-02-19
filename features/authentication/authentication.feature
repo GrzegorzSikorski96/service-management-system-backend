@@ -29,6 +29,19 @@ Feature: Authentication system
     And response success field should be false
 
   @fail
+  Scenario: Fail: Login to blocked account
+    Given I send request to '/api/auth/login' using 'POST' method
+    And user with email 'test@example.com' and password 'secret' exists
+    And user with email 'test@example.com' are blocked
+    And request data is:
+      | key      | value            |
+      | email    | test@example.com |
+      | password | secret           |
+    When request is sent
+    Then the response status code should be 404
+    And response success field should be false
+
+  @fail
   Scenario: Fail: Login with wrong password
     Given I send request to '/api/auth/login' using 'POST' method
     And user with email 'test@example.com' and password 'secret' exists

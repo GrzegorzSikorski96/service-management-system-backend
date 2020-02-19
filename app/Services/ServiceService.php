@@ -38,6 +38,9 @@ class ServiceService
         return Service::firstOrFail();
     }
 
+    /**
+     * @return bool
+     */
     public function isInitialized(): bool
     {
         $service = Service::all()->count();

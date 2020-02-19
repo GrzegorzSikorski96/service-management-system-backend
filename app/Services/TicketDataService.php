@@ -36,7 +36,7 @@ class TicketDataService
     {
         $ticket = $this->ticketService->ticket($ticketId);
 
-        return $ticket->notes()->with('author')->paginate(5);
+        return $ticket->notes()->with('author')->orderByDesc('created_at')->paginate(5);
     }
 
     /**

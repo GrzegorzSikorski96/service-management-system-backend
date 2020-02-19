@@ -7,8 +7,8 @@ namespace Sms\Http\Middleware\Roles;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\UnauthorizedException;
 use Sms\Models\AgencyRole;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class Administrator
 {
@@ -29,6 +29,6 @@ class Administrator
             return $next($request);
         }
 
-        throw new UnauthorizedException();
+        throw new AccessDeniedHttpException();
     }
 }

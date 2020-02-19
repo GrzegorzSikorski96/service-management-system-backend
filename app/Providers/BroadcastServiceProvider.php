@@ -7,6 +7,10 @@ namespace Sms\Providers;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class BroadcastServiceProvider
+ * @package Sms\Providers
+ */
 class BroadcastServiceProvider extends ServiceProvider
 {
     /**

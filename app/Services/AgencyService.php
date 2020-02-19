@@ -65,4 +65,19 @@ class AgencyService
         $agency = Agency::findOrFail($agencyId);
         $agency->delete();
     }
+
+    /**
+     * @param Collection $agencies
+     * @return array
+     */
+    public function createAgenciesForEvents(Collection $agencies)
+    {
+        $agencyStrings = [];
+
+        foreach ($agencies as $agency) {
+            $agencyStrings[] = "agency-$agency->id";
+        }
+
+        return $agencyStrings;
+    }
 }

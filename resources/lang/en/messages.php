@@ -12,5 +12,6 @@ return [
     'registration.fail' => "Registration fail.",
 
     'exceptions.unauthorized' => 'Not permitted.',
+    'exceptions.forbidden' => 'Forbidden.',
     'exceptions.not_found' => 'Page not found.',
 ];

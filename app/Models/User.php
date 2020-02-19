@@ -23,10 +23,13 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $surname
  * @property string $email
  * @property string $password
+ * @property string $phone_number
  * @property int $agency_id
  * @property int $agency_role_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Carbon $blocked_at
+ * @property Carbon $deleted_at
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -103,6 +106,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->role->id == AgencyRole::ADMINISTRATOR;
     }
 
+    /**
+     * @return bool
+     */
     public function isManager(): bool
     {
         return $this->role->id == AgencyRole::MANAGER || $this->role->id == AgencyRole::ADMINISTRATOR;

@@ -6,6 +6,10 @@ namespace Sms\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ * @package Sms\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**

@@ -82,7 +82,10 @@ Route::group(
                 Route::get('/agency/{agencyId}/tickets', 'AgencyDataController@tickets')->where('agencyId', '[0-9]+');
                 Route::get('/agency/{agencyId}/devices', 'AgencyDataController@devices')->where('agencyId', '[0-9]+');
 
-                Route::get('/ticketStatuses', 'TicketStatusController@statuses');
+                Route::put('/ticket/{ticketId}/status/{statusId}', 'TicketStatusController@changeTicketStatus');
+                Route::get('/ticket/{ticketId}/statuses', 'TicketStatusController@availableTicketStatuses')->where('ticketId', '[0-9]+');
+
+                Route::get('/document/{ticketId}/{type}', 'DocumentController@creation');
             }
         );
 

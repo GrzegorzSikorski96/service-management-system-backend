@@ -93,6 +93,10 @@ class UserController extends Controller
             ->getResponse();
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function block(int $userId): JsonResponse
     {
         $this->userService->block($userId);
@@ -103,6 +107,10 @@ class UserController extends Controller
             ->getResponse();
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function unblock(int $userId): JsonResponse
     {
         $this->userService->unblock($userId);

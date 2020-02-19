@@ -12,13 +12,11 @@ use Sms\Models\TicketStatus;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-     * @param Faker $faker
-     * @return array
-     */
     Ticket::class,
     function (Faker $faker) {
         $agency = Agency::inRandomOrder()->first();
+
+        Ticket::flushEventListeners();
 
         return [
             'description' => $faker->text(80),

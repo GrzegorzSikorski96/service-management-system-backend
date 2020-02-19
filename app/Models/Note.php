@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $ticket_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Carbon $deleted_at
  */
 class Note extends Model
 {

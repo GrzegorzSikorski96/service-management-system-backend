@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\Event;
 use Sms\Models\Device;
 
 /**
@@ -29,6 +30,8 @@ class DeviceService extends BaseService
         $agency = $this->agencyService->agency($request['agency_id']);
         $agency->devices()->attach($device);
         $agency->save();
+
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $device;
     }
@@ -88,6 +91,10 @@ class DeviceService extends BaseService
     {
         $device = Device::where('serial_number', $data['serial_number'])->firstOrFail();
 
+        if (!array_key_exists('agency_id', $data)) {
+            $data['agency_id'] = auth()->user()->agency->id;
+        }
+
         $agency = $this->agencyService->agency($data['agency_id']);
         $agency->devices()->syncWithoutDetaching($device);
         $agency->tickets()->syncWithoutDetaching($device->tickets);
@@ -97,6 +104,9 @@ class DeviceService extends BaseService
         }
 
         $agency->save();
+
+        event(new Event(["devices"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $device;
     }

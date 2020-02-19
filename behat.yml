@@ -6,9 +6,33 @@ default:
       default_session: laravel
       laravel: ~
   suites:
-    test:
+    routes:
       paths:
-        - "%paths.base%/features/TestPath"
+        - "%paths.base%/features/routes"
       contexts:
         - BehatTests\RoutesContext
+    authentication:
+      paths:
+        - "%paths.base%/features/authentication"
+      contexts:
         - BehatTests\AuthenticationContext
+    clients:
+      paths:
+        - "%paths.base%/features/clients"
+      contexts:
+        - BehatTests\ClientsContext
+    devices:
+      paths:
+        - "%paths.base%/features/devices"
+      contexts:
+        - BehatTests\DevicesContext
+    tickets:
+      paths:
+        - "%paths.base%/features/tickets"
+      contexts:
+        - BehatTests\TicketsContext
+    agencies:
+      paths:
+        - "%paths.base%/features/agencies"
+      contexts:
+        - BehatTests\AgenciesContext

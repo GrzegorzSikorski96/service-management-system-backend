@@ -22,15 +22,10 @@ class UserService extends BaseService
      */
     public function create(array $request): User
     {
-        return User::create([
-            'name' => $request['name'],
-            'surname' => $request['surname'],
-            'phone_number' => $request['phone_number'],
-            'email' => $request['email'],
-            'password' => $this->hashPassword($request['password']),
-            'agency_role_id' => $request['agency_role_id'],
-            'agency_id' => $request['agency_id']
-        ]);
+        $user = new User($request);
+        $user->save();
+
+        return $user;
     }
 
     /**
@@ -106,8 +101,9 @@ class UserService extends BaseService
             $user = auth()->user()->agency->employees()->findOrFail($userId);
         }
 
-        if (auth()->id() != $userId) {
+        if (auth()->id() != $userId && auth()->user()->isManager()) {
             $user->delete();
+
             return true;
         }
 

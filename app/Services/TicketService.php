@@ -25,9 +25,13 @@ class TicketService extends BaseService
         $ticket->token = Str::random(15);
         $ticket->save();
 
-        foreach ($ticket->device->agencies as $agency) {
-            $agency->tickets()->syncWithoutDetaching($ticket);
+        if (!array_key_exists('agency_id', $request)) {
+            $request['agency_id'] = auth()->user()->agency->id;
         }
+
+        $agency = $this->agencyService->agency($request['agency_id']);
+        $agency->tickets()->attach($ticket);
+        $agency->save();
 
         return $ticket;
     }
@@ -42,7 +46,7 @@ class TicketService extends BaseService
         if ($this->currentUser()->isAdmin()) {
             return Ticket::with('client', 'device', 'ticketStatus')->findOrFail($id);
         }
-        return $this->currentUser()->agency->tickets()->with('client', 'device', 'notes.author', 'ticketStatus')->findOrFail($id);
+        return $this->currentUser()->agency->tickets()->with('client', 'device', 'ticketStatus')->findOrFail($id);
     }
 
     /**

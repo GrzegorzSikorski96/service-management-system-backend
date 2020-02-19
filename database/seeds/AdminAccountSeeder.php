@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Sms\Models\AgencyRole;
+use Sms\Models\User;
+
+/**
+ * Class AdminAccountSeeder
+ */
+class AdminAccountSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        User::firstOrCreate([
+            'name' => 'Administrator',
+            'surname' => 'Administrator',
+            'email' => 'admin@example.com',
+            'phone_number' => '000000000',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'agency_role_id' => AgencyRole::ADMINISTRATOR,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+    }
+}

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @package Sms\Models
  * @property int $id
  * @property string $name
+ * @property string $color
  */
 class TicketStatus extends Model
 {

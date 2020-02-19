@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sms\Services;
 
 use Illuminate\Support\Collection;
+use Sms\Events\Event;
 use Sms\Models\Client;
 
 /**
@@ -29,6 +30,8 @@ class ClientService extends BaseService
         $agency = $this->agencyService->agency($request['agency_id']);
         $agency->clients()->attach($client);
         $agency->save();
+
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $client;
     }
@@ -95,6 +98,10 @@ class ClientService extends BaseService
     {
         $client = Client::where('NIP', $data['number'])->firstOrFail();
 
+        if (!array_key_exists('agency_id', $data)) {
+            $data['agency_id'] = auth()->user()->agency->id;
+        }
+
         $agency = $this->agencyService->agency($data['agency_id']);
         $agency->clients()->syncWithoutDetaching($client);
         $agency->tickets()->syncWithoutDetaching($client->tickets);
@@ -104,6 +111,9 @@ class ClientService extends BaseService
         }
 
         $agency->save();
+
+        event(new Event(["clients"], 'update'));
+        event(new Event(["agency-$agency->id"], 'statistics'));
 
         return $client;
     }

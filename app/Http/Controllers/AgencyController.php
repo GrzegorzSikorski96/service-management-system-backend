@@ -81,7 +81,6 @@ class AgencyController extends Controller
 
     /**
      * @param Agency $data
-     * @param int $agencyId
      * @return JsonResponse
      */
     public function edit(Agency $data): JsonResponse

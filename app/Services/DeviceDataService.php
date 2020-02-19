@@ -34,6 +34,6 @@ class DeviceDataService
     {
         $device = $this->deviceService->device($deviceId);
 
-        return $device->tickets()->with('ticketStatus')->paginate(5);
+        return $device->tickets()->with('ticketStatus')->orderByDesc('created_at')->paginate(5);
     }
 }

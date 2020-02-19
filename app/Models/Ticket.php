@@ -19,18 +19,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $description
  * @property string $additional_information
  * @property string $message
+ * @property string $token
  * @property int $client_id
  * @property int $ticket_status_id
  * @property int $device_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property string $token
+ * @property Carbon $deleted_at
  */
 class Ticket extends Model
 {
     use SoftDeletes;
     use SoftCascadeTrait;
 
+    /**
+     * @var array
+     */
     protected $softCascade = ['notes'];
 
     /**

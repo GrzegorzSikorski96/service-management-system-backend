@@ -42,5 +42,6 @@ return [
     'user.unblock.success' => 'Odblokowano użytkownika.',
 
     'exceptions.unauthorized' => 'Brak uprawnień.',
-    'exceptions.not_found' => 'Strony nie znaleziono.',
+    'not_found' => 'Strony nie znaleziono.',
+    'exceptions.forbidden' => 'Brak dostępu.',
 ];

@@ -9,10 +9,6 @@ use Sms\Models\Device;
 
 /** @var Factory $factory */
 $factory->define(
-    /**
-    * @param Faker $faker
-    * @return array
-    */
     Device::class,
     function (Faker $faker) {
         return [
